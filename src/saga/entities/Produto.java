@@ -6,12 +6,9 @@ public class Produto {
 	private Double preco;
 	private String descricao;
 	
-	public Produto(String nome, Double preco, String descricao) {
+	public Produto(String nome, double preco, String descricao) {
 		if(nome == null) {
 			throw new NullPointerException("O nome não pode ser nulo");
-		}
-		if(preco == null) {
-			throw new NullPointerException("O preco não pode ser nulo");
 		}
 		if(descricao == null){
 			throw new NullPointerException("A descrição não pode ser nula");
@@ -31,11 +28,11 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public Double getPreco() {
+	public double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(double preco) {
 		if(preco < 0.0) {
 			throw new IllegalArgumentException("O preço não pode ser negativo");
 		}

@@ -56,38 +56,41 @@ public class Fornecedor {
 		return nome;
 	}
 	
-	public boolean adicionaProduto(String nome, Double preco, String descricao) {
+	public boolean adicionaProduto(String nome, double preco, String descricao) {
 		if(nome != null) {
-			try {
-				this.produtos.put(nome, new Produto(nome, preco, descricao));
-				return true;
-			}catch(Exception e) {
-				e.printStackTrace();
-			}	
+			if(!this.produtos.containsKey(nome)) {
+				try {
+					this.produtos.put(nome, new Produto(nome, preco, descricao));
+					return true;
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+				
 		}
 		return false;
 	}
 	
-	public boolean removeProduto(String nome, String descricao) {
-		if(this.produtos.containsKey(nome)) {
-			this.produtos.remove(nome);
-			return true;
+	public boolean removeProduto(String nome) {
+		if(!this.produtos.containsKey(nome)) {
+			throw new NullPointerException("Não existe produto com esse nome");
 		}
-		return false;
+		this.produtos.remove(nome);
+		return true;
 	}
 	
 	public Produto getProduto(String nome) {
-		if(this.produtos.containsKey(nome)) {
-			return this.produtos.get(nome);
+		if(!this.produtos.containsKey(nome)) {
+			throw new NullPointerException("Não existe produto com esse nome");
 		}
-		return null;
+		return this.produtos.get(nome);
 	}
 	
 	public String getProdutosAll() {
 		String mensagem = "";
 		
 		for(String chave: this.produtos.keySet()) {
-			mensagem += this.produtos.get(chave).toString();
+			mensagem += this.nome + " - " + this.produtos.get(chave).toString() + " | ";
 		}
 		return mensagem;
 	}

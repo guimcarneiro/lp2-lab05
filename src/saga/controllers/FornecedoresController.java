@@ -12,8 +12,83 @@ public class FornecedoresController {
 		this.fornecedores = new HashMap<String, Fornecedor>();
 	}
 	
-	//TODO: Imprime todos os fornecedores cadastrados e seus respectivos produtos
-	//TODO: Gere todas os métodos de Fornecedor
+	public boolean cadastraFornecedor(String nome, String email, String telefone) {
+		if(nome == null) {
+			return false;
+		}
+		if(nome.trim().isEmpty()) {
+			return false;
+		}
+		if(this.fornecedores.containsKey(nome)) {
+			return false;
+		}
+		try {
+			this.fornecedores.put(nome, new Fornecedor(nome, email, telefone));
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
+	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, Double precoProduto, String descProduto) {
+		if(this.fornecedores.containsKey(nomeFornecedor)) {
+			return false;
+		}
+		try {
+			this.fornecedores.get(nomeFornecedor).adicionaProduto(nomeProduto, precoProduto, descProduto);
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public String imprimeProduto(String nomeFornecedor, String nomeProduto) {
+		if(this.fornecedores.containsKey(nomeFornecedor)) {
+			try {
+				return this.fornecedores.get(nomeFornecedor).getProduto(nomeProduto).toString();
+			}catch(NullPointerException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public String imprimeProdutosAll(String nomeFornecedor) {
+		String mensagem = "";
+		if(this.fornecedores.containsKey(nomeFornecedor)) {
+			for(String fornec: this.fornecedores.keySet()) {
+				mensagem += this.fornecedores.get(fornec).getProdutosAll();
+			}
+		}
+		return mensagem;
+	}
+	
+	public boolean editarPrecoProduto(String nomeFornecedor, String nomeProduto, double precoNovo) {
+		if(!this.fornecedores.containsKey(nomeFornecedor)) {
+			return false;
+		}
+		try {
+			this.fornecedores.get(nomeFornecedor).getProduto(nomeProduto).setPreco(precoNovo);
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean removeProduto(String nomeFornecedor, String nomeProduto) {
+		if(!this.fornecedores.containsKey(nomeFornecedor)) {
+			return false;
+		}
+		try {
+			this.fornecedores.get(nomeFornecedor).removeProduto(nomeFornecedor);
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 }
