@@ -74,12 +74,7 @@ public class Fornecedor {
 	}
 	
 	public String consultaProduto(String nome) {
-		try{
-			return this.produtos.consultaProduto(nome);
-		}catch(NullPointerException npe) {
-			npe.printStackTrace();
-		}
-		return null;
+		return this.produtos.consultaProduto(nome);
 	}
 	
 	public boolean editaPrecoProduto(String nome, double precoNovo) {
@@ -123,7 +118,5 @@ public class Fornecedor {
 		System.out.println(fornecedor.adicionaProduto("Buchada", 34.5, "Buchada de bode gourmet"));
 		System.out.println(fornecedor.consultaProduto("Buchada"));
 		System.out.println(fornecedor.consultaProduto("Inexistente"));
-		//System.out.println(fornecedor.consultaProduto(null));
-		
 	}
 }
