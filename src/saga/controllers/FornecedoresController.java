@@ -13,12 +13,6 @@ public class FornecedoresController {
 	}
 	
 	public boolean cadastraFornecedor(String nome, String email, String telefone) {
-		if(nome == null) {
-			return false;
-		}
-		if(nome.trim().isEmpty()) {
-			return false;
-		}
 		if(this.fornecedores.containsKey(nome)) {
 			return false;
 		}
@@ -47,7 +41,7 @@ public class FornecedoresController {
 	public String imprimeProduto(String nomeFornecedor, String nomeProduto) {
 		if(this.fornecedores.containsKey(nomeFornecedor)) {
 			try {
-				return this.fornecedores.get(nomeFornecedor).getProduto(nomeProduto).toString();
+				return this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto);
 			}catch(NullPointerException e) {
 				e.printStackTrace();
 			}
@@ -55,7 +49,16 @@ public class FornecedoresController {
 		return null;
 	}
 	
-	public String imprimeProdutosAll(String nomeFornecedor) {
+	public String imprimeFornecedoresAll() {
+		String mensagem = "";
+			for(String fornec: this.fornecedores.keySet()) {
+				mensagem += this.fornecedores.get(fornec).toString();
+			}
+		
+		return mensagem;
+	}
+	
+	public String imprimeProdutos(String nomeFornecedor) {
 		String mensagem = "";
 		if(this.fornecedores.containsKey(nomeFornecedor)) {
 			for(String fornec: this.fornecedores.keySet()) {
@@ -70,7 +73,7 @@ public class FornecedoresController {
 			return false;
 		}
 		try {
-			this.fornecedores.get(nomeFornecedor).getProduto(nomeProduto).setPreco(precoNovo);
+			this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -1,14 +1,13 @@
 package saga.entities;
 
-import java.util.HashMap;
+import saga.controllers.ProdutosController;
 
 public class Fornecedor {
 
 	private String nome;
 	private String email;
 	private String telefone;
-	
-	private HashMap<String, Produto> produtos; //HashMap com chave sendo o nome
+	private ProdutosController produtos;
 	
 	public Fornecedor(String nome, String email, String telefone) {
 		if(nome == null) {
@@ -33,7 +32,7 @@ public class Fornecedor {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
-		this.produtos = new HashMap<String, Produto>();
+		this.produtos = new ProdutosController();
 	}
 
 	public String getEmail() {
@@ -58,39 +57,46 @@ public class Fornecedor {
 	
 	public boolean adicionaProduto(String nome, double preco, String descricao) {
 		if(nome != null) {
-			if(!this.produtos.containsKey(nome)) {
-				try {
-					this.produtos.put(nome, new Produto(nome, preco, descricao));
-					return true;
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-				
+			try {
+				return this.produtos.cadastraProduto(nome, preco, descricao);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}	
 		}
 		return false;
 	}
 	
 	public boolean removeProduto(String nome) {
-		if(!this.produtos.containsKey(nome)) {
+		if(!this.produtos.existeProduto(nome)) {
 			throw new NullPointerException("Não existe produto com esse nome");
 		}
-		this.produtos.remove(nome);
-		return true;
+		return this.produtos.removeProduto(nome);
 	}
 	
-	public Produto getProduto(String nome) {
-		if(!this.produtos.containsKey(nome)) {
-			throw new NullPointerException("Não existe produto com esse nome");
+	public String consultaProduto(String nome) {
+		try{
+			return this.produtos.consultaProduto(nome);
+		}catch(NullPointerException npe) {
+			npe.printStackTrace();
 		}
-		return this.produtos.get(nome);
+		return null;
+	}
+	
+	public boolean editaPrecoProduto(String nome, double precoNovo) {
+		try {
+			return this.produtos.editaPrecoProduto(nome, precoNovo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 	
 	public String getProdutosAll() {
 		String mensagem = "";
 		
-		for(String chave: this.produtos.keySet()) {
-			mensagem += this.nome + " - " + this.produtos.get(chave).toString() + " | ";
+		for(String produto: this.produtos.listaProdutos()) {
+			mensagem += this.nome + " - " + produto.toString() + " | ";
 		}
 		return mensagem;
 	}
@@ -103,5 +109,21 @@ public class Fornecedor {
 	@Override
 	public String toString() {
 		return this.nome + " - " + this.email + " - " + this.telefone;
+	}
+	
+	public static void main(String[] args) {
+		
+		//Perguntar se em uma consulta de produto, caso não haja produto cadastrado no fornecedor,
+		//lança ou não lança uma Exception, ou retorna Null, ou os dois.
+		
+		//Do jeito que está retorna null e imprime o printStackTrace
+		
+		Fornecedor fornecedor = new Fornecedor("Chico", "chico@chico.com", "2322-3232");
+		
+		System.out.println(fornecedor.adicionaProduto("Buchada", 34.5, "Buchada de bode gourmet"));
+		System.out.println(fornecedor.consultaProduto("Buchada"));
+		System.out.println(fornecedor.consultaProduto("Inexistente"));
+		//System.out.println(fornecedor.consultaProduto(null));
+		
 	}
 }
