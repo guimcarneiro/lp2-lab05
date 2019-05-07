@@ -25,28 +25,41 @@ public class FornecedoresController {
 		return false;
 	}
 	
-	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, Double precoProduto, String descProduto) {
-		if(this.fornecedores.containsKey(nomeFornecedor)) {
-			return false;
+	public boolean editaEmailFornecedor(String nome, String emailNovo) {
+		if(!this.fornecedores.containsKey(nome)) {
+			throw new NullPointerException("Fornecedor inexistente");
 		}
-		try {
-			this.fornecedores.get(nomeFornecedor).adicionaProduto(nomeProduto, precoProduto, descProduto);
-			return true;
-		}catch(Exception e) {
-			e.printStackTrace();
+		this.fornecedores.get(nome).setEmail(emailNovo);
+		return true;
+	}
+	
+	public boolean editaTelefoneFornecedor(String nome, String telefoneNovo) {
+		if(!this.fornecedores.containsKey(nome)) {
+			throw new NullPointerException("Fornecedor inexistente");
 		}
-		return false;
+		this.fornecedores.get(nome).setEmail(telefoneNovo);
+		return true;
+	}
+	
+	public String imprimeFornecedor(String nome) {
+		if(!this.fornecedores.containsKey(nome)) {
+			throw new NullPointerException("Fornecedor inexistente");
+		}
+		return this.fornecedores.get(nome).toString();
+	}
+	
+	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, double precoProduto, String descProduto) {
+		if(!this.fornecedores.containsKey(nomeFornecedor)) {
+			throw new NullPointerException("Fornecedor inexistente");
+		}
+		return this.fornecedores.get(nomeFornecedor).adicionaProduto(nomeProduto, precoProduto, descProduto);
 	}
 	
 	public String imprimeProduto(String nomeFornecedor, String nomeProduto) {
-		if(this.fornecedores.containsKey(nomeFornecedor)) {
-			try {
-				return this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto);
-			}catch(NullPointerException e) {
-				e.printStackTrace();
-			}
+		if(!this.fornecedores.containsKey(nomeFornecedor)) {
+			throw new NullPointerException("Fornecedor inexistente");
 		}
-		return null;
+		return this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto);
 	}
 	
 	public String imprimeFornecedoresAll() {
@@ -58,19 +71,27 @@ public class FornecedoresController {
 		return mensagem;
 	}
 	
-	public String imprimeProdutos(String nomeFornecedor) {
+	public String imprimeProdutosFornecedor(String nomeFornecedor) {
 		String mensagem = "";
 		if(this.fornecedores.containsKey(nomeFornecedor)) {
-			for(String fornec: this.fornecedores.keySet()) {
-				mensagem += this.fornecedores.get(fornec).getProdutosAll();
-			}
+			mensagem += this.fornecedores.get(nomeFornecedor).getProdutosAll();
+		}else {
+			throw new NullPointerException("Fornecedor inexistente");
+		}
+		return mensagem;
+	}
+	
+	public String imprimeProdutosAll() {
+		String mensagem = "";
+		for(String chaveFornec: this.fornecedores.keySet()) {
+			mensagem += this.fornecedores.get(chaveFornec).getProdutosAll() + " | ";
 		}
 		return mensagem;
 	}
 	
 	public boolean editarPrecoProduto(String nomeFornecedor, String nomeProduto, double precoNovo) {
 		if(!this.fornecedores.containsKey(nomeFornecedor)) {
-			return false;
+			throw new NullPointerException("Fornecedor inexistente");
 		}
 		try {
 			this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
@@ -83,7 +104,7 @@ public class FornecedoresController {
 	
 	public boolean removeProduto(String nomeFornecedor, String nomeProduto) {
 		if(!this.fornecedores.containsKey(nomeFornecedor)) {
-			return false;
+			throw new NullPointerException("Fornecedor inexistente");
 		}
 		try {
 			this.fornecedores.get(nomeFornecedor).removeProduto(nomeFornecedor);
@@ -92,6 +113,14 @@ public class FornecedoresController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public boolean removeFornecedor(String nomeFornecedor) {
+		if(!this.fornecedores.containsKey(nomeFornecedor)) {
+			throw new NullPointerException("Fornecedor inexistente");
+		}
+		this.fornecedores.remove(nomeFornecedor);
+		return true;
 	}
 	
 }

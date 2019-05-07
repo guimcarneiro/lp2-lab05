@@ -56,14 +56,7 @@ public class Fornecedor {
 	}
 	
 	public boolean adicionaProduto(String nome, double preco, String descricao) {
-		if(nome != null) {
-			try {
-				return this.produtos.cadastraProduto(nome, preco, descricao);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}	
-		}
-		return false;
+		return this.produtos.cadastraProduto(nome, preco, descricao);
 	}
 	
 	public boolean removeProduto(String nome) {
@@ -118,5 +111,6 @@ public class Fornecedor {
 		System.out.println(fornecedor.adicionaProduto("Buchada", 34.5, "Buchada de bode gourmet"));
 		System.out.println(fornecedor.consultaProduto("Buchada"));
 		System.out.println(fornecedor.consultaProduto("Inexistente"));
+		
 	}
 }

@@ -15,14 +15,10 @@ public class ProdutosController {
 	
 	public boolean cadastraProduto(String nome, double preco, String descricao) {
 		if(!this.produtos.containsKey(nome)) {
-			try {
-				this.produtos.put(nome, new Produto(nome, preco, descricao));
-				return true;
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			this.produtos.put(nome, new Produto(nome, preco, descricao));
+			return true;
 		}
-		return false;
+		throw new IllegalArgumentException("Produto já cadastrado no sistema");
 	}
 	
 	public String consultaProduto(String nome) {

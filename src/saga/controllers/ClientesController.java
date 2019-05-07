@@ -13,13 +13,8 @@ public class ClientesController {
 	}
 	
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
-		try {
-			this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
-			return cpf;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
+		return cpf;
 	}
 	
 	public String consultaCliente(String cpf) {
@@ -36,7 +31,7 @@ public class ClientesController {
 	
 	public boolean editaNomeCliente(String cpf, String nome) {
 		if(!this.clientes.containsKey(cpf)) {
-			return false;
+			throw new NullPointerException("Cliente inexistente");
 		}
 		this.clientes.get(cpf).setNome(nome);
 		return true;
@@ -44,7 +39,7 @@ public class ClientesController {
 	
 	public boolean editaEmailCliente(String cpf, String email) {
 		if(!this.clientes.containsKey(cpf)) {
-			return false;
+			throw new NullPointerException("Cliente inexistente");
 		}
 		this.clientes.get(cpf).setEmail(email);
 		return true;
@@ -52,7 +47,7 @@ public class ClientesController {
 	
 	public boolean editaLocalizacaoCliente(String cpf, String localizacao) {
 		if(!this.clientes.containsKey(cpf)) {
-			return false;
+			throw new NullPointerException("Cliente inexistente");
 		}
 		this.clientes.get(cpf).setLocalizacao(localizacao);
 		return true;
@@ -62,6 +57,6 @@ public class ClientesController {
 		if(this.clientes.remove(cpf) != null) {
 			return true;
 		}
-		return false;
+		throw new NullPointerException("Cliente Inexistente");
 	}
 }
