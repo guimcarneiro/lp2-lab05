@@ -27,7 +27,7 @@ public class FornecedoresController {
 	
 	public boolean editaEmailFornecedor(String nome, String emailNovo) {
 		if(!this.fornecedores.containsKey(nome)) {
-			throw new NullPointerException("Fornecedor inexistente");
+			return false;
 		}
 		this.fornecedores.get(nome).setEmail(emailNovo);
 		return true;
@@ -35,7 +35,7 @@ public class FornecedoresController {
 	
 	public boolean editaTelefoneFornecedor(String nome, String telefoneNovo) {
 		if(!this.fornecedores.containsKey(nome)) {
-			throw new NullPointerException("Fornecedor inexistente");
+			return false;
 		}
 		this.fornecedores.get(nome).setEmail(telefoneNovo);
 		return true;
@@ -43,14 +43,14 @@ public class FornecedoresController {
 	
 	public String imprimeFornecedor(String nome) {
 		if(!this.fornecedores.containsKey(nome)) {
-			throw new NullPointerException("Fornecedor inexistente");
+			return null;
 		}
 		return this.fornecedores.get(nome).toString();
 	}
 	
 	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, double precoProduto, String descProduto) {
 		if(!this.fornecedores.containsKey(nomeFornecedor)) {
-			throw new NullPointerException("Fornecedor inexistente");
+			return false;
 		}
 		return this.fornecedores.get(nomeFornecedor).adicionaProduto(nomeProduto, precoProduto, descProduto);
 	}
