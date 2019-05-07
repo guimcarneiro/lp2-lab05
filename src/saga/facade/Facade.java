@@ -14,7 +14,12 @@ public class Facade {
 	}
 	//Perguntar se quando lançar uma exceção de cadastro inválido o programa para
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
-		return this.clientes.cadastraCliente(cpf, nome, email, localizacao);
+		try{
+			return this.clientes.cadastraCliente(cpf, nome, email, localizacao);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public String imprimeCliente(String cpf) {

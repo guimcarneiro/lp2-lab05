@@ -61,7 +61,7 @@ public class Fornecedor {
 	
 	public boolean removeProduto(String nome) {
 		if(!this.produtos.existeProduto(nome)) {
-			throw new NullPointerException("Não existe produto com esse nome");
+			return false;
 		}
 		return this.produtos.removeProduto(nome);
 	}

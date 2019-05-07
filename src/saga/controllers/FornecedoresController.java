@@ -97,9 +97,9 @@ public class FornecedoresController {
 			this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
 			return true;
 		}catch(Exception e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
+		
 	}
 	
 	public boolean removeProduto(String nomeFornecedor, String nomeProduto) {

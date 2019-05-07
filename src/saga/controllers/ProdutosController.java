@@ -18,14 +18,14 @@ public class ProdutosController {
 			this.produtos.put(nome, new Produto(nome, preco, descricao));
 			return true;
 		}
-		throw new IllegalArgumentException("Produto já cadastrado no sistema");
+		return false;
 	}
 	
 	public String consultaProduto(String nome) {
 		try{
 			return this.produtos.get(nome).toString();
 		}catch(NullPointerException npe) {
-			throw new NullPointerException("Produto não cadastrado");
+			return null;
 		}
 	}
 	
