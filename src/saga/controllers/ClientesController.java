@@ -16,21 +16,15 @@ public class ClientesController {
 		if(this.clientes.containsKey(cpf)) {
 			return null;
 		}
-		try{
-			this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
-			return cpf;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
+		return cpf;
 	}
 	
 	public String consultaCliente(String cpf) {
-		try{
-			return this.clientes.get(cpf).toString();
-		}catch(NullPointerException npe) {
+		if(this.clientes.get(cpf) == null) {
 			return null;
 		}
+		return this.clientes.get(cpf).toString();
 	}
 	
 	public String consultaClientesAll() {
@@ -42,29 +36,26 @@ public class ClientesController {
 	}
 	
 	public boolean editaNomeCliente(String cpf, String nome) {
-		try{
-			this.clientes.get(cpf).setNome(nome);
-		}catch(NullPointerException npe) {
+		if(this.clientes.get(cpf) == null) {
 			return false;
 		}
+		this.clientes.get(cpf).setNome(nome);
 		return true;
 	}
 	
 	public boolean editaEmailCliente(String cpf, String email) {
-		try{
-			this.clientes.get(cpf).setEmail(email);
-		}catch(NullPointerException npe) {
+		if(this.clientes.get(cpf) == null) {
 			return false;
 		}
+		this.clientes.get(cpf).setEmail(email);
 		return true;
 	}
 	
 	public boolean editaLocalizacaoCliente(String cpf, String localizacao) {
-		try{
-			this.clientes.get(cpf).setLocalizacao(localizacao);
-		}catch(NullPointerException npe) {
+		if(this.clientes.get(cpf) == null) {
 			return false;
 		}
+		this.clientes.get(cpf).setLocalizacao(localizacao);
 		return true;
 	}
 	

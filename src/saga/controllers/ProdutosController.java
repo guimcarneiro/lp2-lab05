@@ -51,13 +51,11 @@ public class ProdutosController {
 		if(!this.produtos.containsKey(nome)) {
 			return false;
 		}
-		try {
-			this.produtos.get(nome).setPreco(precoNovo);
-			return true;
-		}catch(Exception e) {
-			e.printStackTrace();
+		if(precoNovo < 0.0) {
+			return false;
 		}
-		return false;
+		this.produtos.get(nome).setPreco(precoNovo);
+		return true;
 	}
 	
 	public boolean existeProduto(String nome) {

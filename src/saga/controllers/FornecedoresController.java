@@ -16,13 +16,8 @@ public class FornecedoresController {
 		if(this.fornecedores.containsKey(nome)) {
 			return false;
 		}
-		try {
-			this.fornecedores.put(nome, new Fornecedor(nome, email, telefone));
-			return true;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+		this.fornecedores.put(nome, new Fornecedor(nome, email, telefone));
+		return true;
 	}
 	
 	public boolean editaEmailFornecedor(String nome, String emailNovo) {
@@ -56,11 +51,13 @@ public class FornecedoresController {
 	}
 	
 	public String imprimeProduto(String nomeFornecedor, String nomeProduto) {
-		try{
-			return this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto);
-		}catch(Exception e) {
+		if(this.fornecedores.get(nomeFornecedor) == null) {
 			return null;
 		}
+		if(this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto) == null) {
+			return null;
+		}
+		return this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto);
 	}
 	
 	public String imprimeFornecedoresAll() {
@@ -74,11 +71,13 @@ public class FornecedoresController {
 	
 	public String imprimeProdutosFornecedor(String nomeFornecedor) {
 		String mensagem = "";
-		try{
-			mensagem += this.fornecedores.get(nomeFornecedor).getProdutosAll();
-		}catch(Exception e) {
+		if(this.fornecedores.get(nomeFornecedor) == null) {
 			return null;
 		}
+		if("".equals(this.fornecedores.get(nomeFornecedor).getProdutosAll())) {
+			return null;
+		}
+		mensagem += this.fornecedores.get(nomeFornecedor).getProdutosAll();
 		return mensagem;
 	}
 	
@@ -91,23 +90,22 @@ public class FornecedoresController {
 	}
 	
 	public boolean editarPrecoProduto(String nomeFornecedor, String nomeProduto, double precoNovo) {
-		try {
-			this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
-			return true;
-		}catch(Exception e) {
+		if(this.fornecedores.get(nomeFornecedor) == null) {
 			return false;
 		}
-		
+		this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
+		return true;
 	}
 	
 	public boolean removeProduto(String nomeFornecedor, String nomeProduto) {
-		try {
-			this.fornecedores.get(nomeFornecedor).removeProduto(nomeFornecedor);
-			return true;
-		}catch(Exception e) {
-			e.printStackTrace();
+		if(this.fornecedores.get(nomeFornecedor) == null) {
+			return false;
 		}
-		return false;
+		if(this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto) == null) {
+			return false;
+		}
+		this.fornecedores.get(nomeFornecedor).removeProduto(nomeProduto);
+		return true;
 	}
 	
 	public boolean removeFornecedor(String nomeFornecedor) {
