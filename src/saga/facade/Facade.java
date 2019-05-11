@@ -12,7 +12,7 @@ public class Facade {
 		this.clientes = new ClientesController();
 		this.fornecedores = new FornecedoresController();
 	}
-	//Perguntar se quando lançar uma exceção de cadastro inválido o programa para
+
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
 		return this.clientes.cadastraCliente(cpf, nome, email, localizacao);
 	}
