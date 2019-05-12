@@ -54,7 +54,7 @@ public class FornecedoresController {
 	 * @param emailNovo String com o novo email que será do fornecedor
 	 * @return true para uma edição de email bem-sucedida, false caso contrário
 	 */
-	public boolean editaEmailFornecedor(String nome, String emailNovo) {
+	private boolean editaEmailFornecedor(String nome, String emailNovo) {
 		if(!this.fornecedores.containsKey(nome)) {
 			return false;
 		}
@@ -70,12 +70,35 @@ public class FornecedoresController {
 	 * @param telefoneNovo String com o novo telefone que será do fornecedor
 	 * @return true para uma edição de telefone bem-sucedida, false caso contrário
 	 */
-	public boolean editaTelefoneFornecedor(String nome, String telefoneNovo) {
+	private boolean editaTelefoneFornecedor(String nome, String telefoneNovo) {
 		if(!this.fornecedores.containsKey(nome)) {
 			return false;
 		}
 		this.fornecedores.get(nome).setEmail(telefoneNovo);
 		return true;
+	}
+	
+	/**
+	 * Retorna um booleano sobre o sucesso da edição de informação de um fornecedor. Edita uma informação
+	 * com base no nome do fornecedor, no atributo que se quer alterar e na nova informação que será sobreposta
+	 * ao atributo passado como parâmetro em "atributo". Caso não exista o fornecedor passado como parâmetro,
+	 * false será retornado.
+	 * 
+	 * @param nome String contendo o nome do fornecedor
+	 * @param atributo String contendo o atributo do fornecedor que se quer alterar: "email" ou "telefone"
+	 * @param informacao String contendo a nova informação que será sobreposta ao atributo escolhido
+	 * @return true para uma edição de informação de fornecedor bem-sucedida, false caso contrário
+	 */
+	public boolean editaFornecedor(String nome, String atributo, String informacao) {
+		if("email".equals(atributo.toLowerCase())) {
+			this.editaEmailFornecedor(nome, informacao);
+			return true;
+		}
+		if("telefone".equals(atributo.toLowerCase())) {
+			this.editaTelefoneFornecedor(nome, informacao);
+			return true;
+		}
+		return false;
 	}
 	
 	/**

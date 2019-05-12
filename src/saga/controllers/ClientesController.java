@@ -85,7 +85,7 @@ public class ClientesController {
 	 * @param nome String que representa o novo nome que o cliente adotará
 	 * @return true para uma edição bem-sucedida, false caso contrário
 	 */
-	public boolean editaNomeCliente(String cpf, String nome) {
+	private boolean editaNomeCliente(String cpf, String nome) {
 		if(this.clientes.get(cpf) == null) {
 			return false;
 		}
@@ -100,7 +100,7 @@ public class ClientesController {
 	 * @param email String que representa o novo email que o cliente adotará
 	 * @return true para uma edição bem-sucedida, false caso contrário
 	 */
-	public boolean editaEmailCliente(String cpf, String email) {
+	private boolean editaEmailCliente(String cpf, String email) {
 		if(this.clientes.get(cpf) == null) {
 			return false;
 		}
@@ -115,12 +115,38 @@ public class ClientesController {
 	 * @param localizacao String que representa o novo laboratório que o cliente adotará
 	 * @return true para uma edição bem-sucedida, false caso contrário
 	 */
-	public boolean editaLocalizacaoCliente(String cpf, String localizacao) {
+	private boolean editaLocalizacaoCliente(String cpf, String localizacao) {
 		if(this.clientes.get(cpf) == null) {
 			return false;
 		}
 		this.clientes.get(cpf).setLocalizacao(localizacao);
 		return true;
+	}
+	
+	/**
+	 * Retorna um booleano sobre o sucesso da edição de uma informação de um cliente. Edita o atributo
+	 * do cliente com base no atributo passado como parâmetro. Retorna false caso o cliente passado
+	 * como parâmetro não exista no sistema.
+	 * 
+	 * @param cpf String contendo o CPF do cliente que se quer editar
+	 * @param atributo String contendo o atributo do Cliente que se quer editar: nome, email ou localizacao
+	 * @param informacao String contendo a informacao que se quer substituir do atributo anterior, informacao nova
+	 * @return true para uma edição de Cliente bem-sucedida, false caso contrário
+	 */
+	public boolean editaCliente(String cpf, String atributo, String informacao) {
+		if("nome".equals(atributo.toLowerCase())) {
+			this.editaNomeCliente(cpf, informacao);
+			return true;
+		}
+		if("email".equals(atributo.toLowerCase())) {
+			this.editaEmailCliente(cpf, informacao);
+			return true;
+		}
+		if("localizacao".equals(atributo.toLowerCase())) {
+			this.editaLocalizacaoCliente(cpf, informacao);
+			return true;
+		}
+		return false;
 	}
 	
 	/**

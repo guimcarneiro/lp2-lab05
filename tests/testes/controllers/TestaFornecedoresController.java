@@ -12,8 +12,52 @@ class TestaFornecedoresController {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaCadastraFornecedor() {
+		
 	}
-
+	
+	@Test
+	void testaImprimeFornecedor() {
+		
+	}
+	
+	@Test
+	void testaEditaFornecedor() {
+		
+	}
+	
+	@Test
+	void testaRemoveFornecedor() {
+		
+	}
+	
+	@Test
+	void testaImprimeProduto() {
+		
+	}
+	
+	@Test
+	void testaImprimeFornecedoresAll() {
+		
+	}
+	
+	@Test
+	void testaImprimeProdutosFornecedor() {
+		
+	}
+	
+	@Test
+	void testaImprimeProdutosAll() {
+		
+	}
+	
+	@Test
+	void testaEditaPrecoProduto() {
+		
+	}
+	
+	@Test
+	void testaRemoveProduto() {
+		
+	}
 }

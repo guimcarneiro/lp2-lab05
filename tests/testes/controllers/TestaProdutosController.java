@@ -12,8 +12,32 @@ class TestaProdutosController {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaCadastraProduto() {
+		
 	}
-
+	
+	@Test
+	void testaConsultaProduto() {
+		
+	}
+	
+	@Test
+	void testaListaProdutos() {
+		
+	}
+	
+	@Test
+	void testaRemoveProduto() {
+		
+	}
+	
+	@Test
+	void testaEditaPrecoProduto() {
+		
+	}
+	
+	@Test
+	void testaExisteProduto() {
+		
+	}
 }

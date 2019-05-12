@@ -12,8 +12,28 @@ class TestaClientesController {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaCadastroCliente() {
+		
+	}
+	
+	@Test
+	void testaConsultaCliente() {
+		
+	}
+	
+	@Test
+	void testaListaClientes() {
+		
+	}
+	
+	@Test
+	void testaEditaCliente() {
+		
+	}
+	
+	@Test
+	void testaRemoveCliente() {
+		
 	}
 
 }

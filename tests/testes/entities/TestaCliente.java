@@ -12,8 +12,13 @@ class TestaCliente {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaCliente() {
+		
 	}
-
+	
+	@Test
+	void testaToString() {
+		
+	}
+	
 }

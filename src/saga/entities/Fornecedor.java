@@ -180,7 +180,7 @@ public class Fornecedor {
 	}
 	
 	/**
-	 * Retorna um int que identifica unicamente um Fornecedor. Um fornecedor é identificado
+	 * Retorna um inteiro que identifica unicamente um Fornecedor. Um fornecedor é identificado
 	 * unicamente pelo seu nome.
 	 * 
 	 * @return int que identifica unicamente um fornecedor

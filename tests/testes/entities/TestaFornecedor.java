@@ -12,8 +12,38 @@ class TestaFornecedor {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaFornecedor() {
+		
+	}
+	
+	@Test
+	void testaAdicionaProduto() {
+		
+	}
+	
+	@Test
+	void testaRemoveProduto() {
+		
+	}
+	
+	@Test
+	void testaConsultaProduto() {
+		
+	}
+	
+	@Test
+	void testaEditaPrecoProduto() {
+		
+	}
+	
+	@Test
+	void testaGetProdutosAll() {
+		
+	}
+	
+	@Test
+	void testaToString() {
+		
 	}
 
 }

@@ -12,8 +12,18 @@ class TestaProduto {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaProduto() {
+		
+	}
+	
+	@Test
+	void testaSetPreco() {
+		
+	}
+	
+	@Test
+	void testaToString() {
+		
 	}
 
 }

@@ -12,8 +12,77 @@ class TestaFacade {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testaCadastraCliente() {
+		
 	}
-
+	
+	@Test
+	void testaImprimeCliente() {
+		
+	}
+	
+	@Test
+	void testaListaClientes() {
+		
+	}
+	
+	@Test
+	void testaEditaCliente() {
+		
+	}
+	
+	@Test
+	void testaRemoveCliente() {
+		
+	}
+	
+	@Test
+	void testaCadastraFornecedor() {
+		
+	}
+	
+	@Test
+	void testaImprimeFornecedor() {
+		
+	}
+	
+	@Test
+	void testaListaFornecedores() {
+		
+	}
+	
+	@Test
+	void testaEditaFornecedor() {
+		
+	}
+	
+	@Test
+	void testaRemoveFornecedor() {
+		
+	}
+	
+	@Test
+	void testaCadastraProduto() {
+		
+	}
+	
+	@Test
+	void testaConsultaProdutosFornecedor() {
+		
+	}
+	
+	@Test
+	void testaConsultaProdutosAll() {
+		
+	}
+	
+	@Test
+	void testaEditaPrecoProduto() {
+		
+	}
+	
+	@Test
+	void testaRemoveProduto() {
+		
+	}
 }
