@@ -1,19 +1,24 @@
 package testes.facade;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import saga.facade.Facade;
+
 class TestaFacade {
 
+	private Facade facade;
+	
 	@BeforeEach
 	void setUp() throws Exception {
+		this.facade = new Facade();
 	}
 
 	@Test
 	void testaCadastraCliente() {
-		
+		assertEquals("O cadastro válido de um cliente retornou false", "222222", this.facade.cadastraCliente("222222", "Cliente novo", "cliente@", "LCC3"));
 	}
 	
 	@Test
