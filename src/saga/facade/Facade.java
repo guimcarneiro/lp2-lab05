@@ -106,7 +106,7 @@ public class Facade {
 	 * @param telefone String contendo o telefone do fornecedor
 	 * @return true para um cadastro bem-sucedido, false caso contrário
 	 */
-	public boolean cadastraFornecedor(String nome, String email, String telefone) {
+	public String cadastraFornecedor(String nome, String email, String telefone) {
 		return this.fornecedores.cadastraFornecedor(nome, email, telefone);
 	}
 

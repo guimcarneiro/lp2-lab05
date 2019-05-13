@@ -30,7 +30,7 @@ public class ClientesController {
 	 * Retorna o cpf do cliente cadastrado, caso o cadastro seja bem-sucedido. Cadastra um 
 	 * cliente com base em seu cpf, nome, email e laboratório de origem. O cpf identifica 
 	 * unicamente um cliente, portanto não se pode cadastrar dois ou mais clientes com o mesmo
-	 * cpf. Caso o cliente que se queira cadastrar já exista no sistema, será retornado null.
+	 * cpf. Caso o cliente que se queira cadastrar já exista no sistema, será lançada uma IllegalArgumentException.
 	 * Os parâmetros não devem ser nulos ou vazios, NullPointerException ou IllegalArgumentException
 	 * serão lançadas, respectivamente.
 	 * 
@@ -43,7 +43,7 @@ public class ClientesController {
 	 */
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
 		if(this.clientes.containsKey(cpf)) {
-			return null;
+			throw new IllegalArgumentException("Esse cliente já existe no sistema");
 		}
 		this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
 		return cpf;

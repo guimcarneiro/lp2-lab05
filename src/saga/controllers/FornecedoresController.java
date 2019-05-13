@@ -27,23 +27,23 @@ public class FornecedoresController {
 	}
 	
 	/**
-	 * Retorna um booleano sobre o sucesso do cadastro de um fornecedor. Cadastra um fornecedor
+	 * Retorna uma String com o nome do fornecedor cadastrado. Cadastra um fornecedor
 	 * com base em seu nome, seu email e seu telefone. Não se pode cadastrar mais de um fornecedor
 	 * com o mesmo nome. Caso o fornecedor que se quer cadastrar já exista no sistema, será retornado
-	 * false. Parâmetros nulos ou vazios retornaram NullPointerException e IllegalArgumentException,
-	 * respectivamente.
+	 * uma IllegalArgumentException. Parâmetros nulos ou vazios retornaram NullPointerException e IllegalArgumentException,
+	 * respectivamente. Lança uma IllegalArgumentException quando o cadastro for mal-sucedido.
 	 * 
 	 * @param nome String do nome do fornecedor
 	 * @param email String do email do fornecedor
 	 * @param telefone String do telefone do fornecedor
-	 * @return true para um cadastro bem-sucedido, false caso contrário
+	 * @return String contendo o nome do fornecedor cadastrado
 	 */
-	public boolean cadastraFornecedor(String nome, String email, String telefone) {
+	public String cadastraFornecedor(String nome, String email, String telefone) {
 		if(this.fornecedores.containsKey(nome)) {
-			return false;
+			throw new IllegalArgumentException("Fornecedor já existente no sistema");
 		}
 		this.fornecedores.put(nome, new Fornecedor(nome, email, telefone));
-		return true;
+		return nome;
 	}
 	
 	/**
