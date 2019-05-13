@@ -74,7 +74,7 @@ public class FornecedoresController {
 		if(!this.fornecedores.containsKey(nome)) {
 			return false;
 		}
-		this.fornecedores.get(nome).setEmail(telefoneNovo);
+		this.fornecedores.get(nome).setTelefone(telefoneNovo);
 		return true;
 	}
 	
@@ -90,6 +90,9 @@ public class FornecedoresController {
 	 * @return true para uma edição de informação de fornecedor bem-sucedida, false caso contrário
 	 */
 	public boolean editaFornecedor(String nome, String atributo, String informacao) {
+		if(!this.fornecedores.containsKey(nome)) {
+			return false;
+		}
 		if("email".equals(atributo.toLowerCase())) {
 			this.editaEmailFornecedor(nome, informacao);
 			return true;
@@ -113,6 +116,21 @@ public class FornecedoresController {
 			return null;
 		}
 		return this.fornecedores.get(nome).toString();
+	}
+	
+	/**
+	 * Retorna um booleano sobre o sucesso de uma remoção de um fornecedor. Caso o fornecedor não exista,
+	 * será retornado false.
+	 * 
+	 * @param nomeFornecedor String com o nome do fornecedor
+	 * @return true para uma remoção bem-sucedida, false caso contrário
+	 */
+	public boolean removeFornecedor(String nomeFornecedor) {
+		if(!this.fornecedores.containsKey(nomeFornecedor)) {
+			return false;
+		}
+		this.fornecedores.remove(nomeFornecedor);
+		return true;
 	}
 	
 	/**
@@ -162,9 +180,11 @@ public class FornecedoresController {
 	public String imprimeFornecedoresAll() {
 		String mensagem = "";
 			for(String fornec: this.fornecedores.keySet()) {
-				mensagem += this.fornecedores.get(fornec).toString();
+				mensagem += this.fornecedores.get(fornec).toString() + " | ";
 			}
-		
+			if(!"".equals(mensagem)) {
+				mensagem = mensagem.substring(0, mensagem.length()-3);
+			}
 		return mensagem;
 	}
 	
@@ -203,6 +223,9 @@ public class FornecedoresController {
 		for(String chaveFornec: this.fornecedores.keySet()) {
 			mensagem += this.fornecedores.get(chaveFornec).getProdutosAll() + " | ";
 		}
+		if(!"".equals(mensagem)) {
+			mensagem = mensagem.substring(0, mensagem.length()-3);
+		}
 		return mensagem;
 	}
 	
@@ -220,8 +243,7 @@ public class FornecedoresController {
 		if(this.fornecedores.get(nomeFornecedor) == null) {
 			return false;
 		}
-		this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
-		return true;
+		return this.fornecedores.get(nomeFornecedor).editaPrecoProduto(nomeProduto, precoNovo);
 	}
 	
 	/**
@@ -243,19 +265,5 @@ public class FornecedoresController {
 		return true;
 	}
 	
-	/**
-	 * Retorna um booleano sobre o sucesso de uma remoção de um fornecedor. Caso o fornecedor não exista,
-	 * será retornado false.
-	 * 
-	 * @param nomeFornecedor String com o nome do fornecedor
-	 * @return true para uma remoção bem-sucedida, false caso contrário
-	 */
-	public boolean removeFornecedor(String nomeFornecedor) {
-		if(!this.fornecedores.containsKey(nomeFornecedor)) {
-			return false;
-		}
-		this.fornecedores.remove(nomeFornecedor);
-		return true;
-	}
 	
 }

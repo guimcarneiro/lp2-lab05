@@ -176,6 +176,9 @@ public class Fornecedor {
 		for(String produto: this.produtos.listaProdutos()) {
 			mensagem += this.nome + " - " + produto + " | ";
 		}
+		if(!"".equals(mensagem)) {
+			mensagem = mensagem.substring(0, mensagem.length()-3);
+		}
 		return mensagem;
 	}
 	

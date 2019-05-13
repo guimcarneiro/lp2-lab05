@@ -75,6 +75,9 @@ public class ClientesController {
 		for(String cpfCliente: this.clientes.keySet()) {
 			mensagem += this.clientes.get(cpfCliente).toString() + " | ";
 		}
+		if(!"".equals(mensagem)) {
+			mensagem = mensagem.substring(0, mensagem.length()-3);
+		}
 		return mensagem;
 	}
 	
