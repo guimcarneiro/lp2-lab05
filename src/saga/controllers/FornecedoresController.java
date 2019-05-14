@@ -40,7 +40,7 @@ public class FornecedoresController {
 	 */
 	public String cadastraFornecedor(String nome, String email, String telefone) {
 		if(this.fornecedores.containsKey(nome)) {
-			throw new IllegalArgumentException("Fornecedor já existente no sistema");
+			throw new IllegalArgumentException("Erro no cadastro de fornecedor: fornecedor ja existe.");
 		}
 		this.fornecedores.put(nome, new Fornecedor(nome, email, telefone));
 		return nome;
@@ -82,16 +82,32 @@ public class FornecedoresController {
 	 * Retorna um booleano sobre o sucesso da edição de informação de um fornecedor. Edita uma informação
 	 * com base no nome do fornecedor, no atributo que se quer alterar e na nova informação que será sobreposta
 	 * ao atributo passado como parâmetro em "atributo". Caso não exista o fornecedor passado como parâmetro,
-	 * false será retornado.
+	 * lançará NullPointerException. Caso o atributo passado não possa ser editado, lança IllegalArgumentException.
+	 * Lançará IllegalArgumentException para atributos vazios e NullPointerException para atributos nulos.
 	 * 
 	 * @param nome String contendo o nome do fornecedor
 	 * @param atributo String contendo o atributo do fornecedor que se quer alterar: "email" ou "telefone"
 	 * @param informacao String contendo a nova informação que será sobreposta ao atributo escolhido
-	 * @return true para uma edição de informação de fornecedor bem-sucedida, false caso contrário
+	 * @return true para uma edição de informação de fornecedor bem-sucedida
 	 */
 	public boolean editaFornecedor(String nome, String atributo, String informacao) {
 		if(!this.fornecedores.containsKey(nome)) {
-			return false;
+			throw new NullPointerException("Erro na exibicao do fornecedor: fornecedor nao existe.");
+		}
+		if(atributo == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		}
+		if(atributo.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		}
+		if(informacao == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
+		}
+		if(informacao.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
+		}
+		if("nome".equals(atributo.toLowerCase())) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser editado.");
 		}
 		if("email".equals(atributo.toLowerCase())) {
 			this.editaEmailFornecedor(nome, informacao);
@@ -101,33 +117,33 @@ public class FornecedoresController {
 			this.editaTelefoneFornecedor(nome, informacao);
 			return true;
 		}
-		return false;
+		throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao existe.");
 	}
 	
 	/**
 	 * Retorna String contendo informações sobre um fornecedor. Caso não exista um fornecedor com o
-	 * nome passado como parâmetro, será retornado null.
+	 * nome passado como parâmetro, lançará uma NullPointerException.
 	 * 
 	 * @param nome String com o nome do fornecedor
 	 * @return String contendo informações sobre o fornecedor buscado
 	 */
 	public String imprimeFornecedor(String nome) {
 		if(!this.fornecedores.containsKey(nome)) {
-			return null;
+			throw new NullPointerException("Erro na exibicao do fornecedor: fornecedor nao existe.");
 		}
 		return this.fornecedores.get(nome).toString();
 	}
 	
 	/**
 	 * Retorna um booleano sobre o sucesso de uma remoção de um fornecedor. Caso o fornecedor não exista,
-	 * será retornado false.
+	 * lançará NullPointerException.
 	 * 
 	 * @param nomeFornecedor String com o nome do fornecedor
-	 * @return true para uma remoção bem-sucedida, false caso contrário
+	 * @return true para uma remoção bem-sucedida
 	 */
 	public boolean removeFornecedor(String nomeFornecedor) {
 		if(!this.fornecedores.containsKey(nomeFornecedor)) {
-			return false;
+			throw new NullPointerException("Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio.");
 		}
 		this.fornecedores.remove(nomeFornecedor);
 		return true;
@@ -137,17 +153,18 @@ public class FornecedoresController {
 	 * Retorna booleano sobre o sucesso ou não do cadastro de um produto a um fornecedor. Caso
 	 * não exista o fornecedor passado como parâmetro, será retornado null. Caso sejam passados
 	 * valores nulos ou vazios para nomeProduto, precoProduto ou descProduto, serão lançadas
-	 * NullPointerException e IllegalArgumentException, respectivamente. 
+	 * NullPointerException e IllegalArgumentException, respectivamente. Caso não exista o fornecedor
+	 * passado como parâmetro, lança NullPointerException.
 	 * 
 	 * @param nomeFornecedor String do nome do fornecedor ao qual se quer cadastrar o produto
 	 * @param nomeProduto String do nome do produto a ser cadastrado
 	 * @param precoProduto double do preco do produto a ser cadastrado
 	 * @param descProduto String da descrição do produto a ser cadastrado
-	 * @return true para um cadastro bem-sucedido, false caso contrário
+	 * @return true para um cadastro bem-sucedido
 	 */
 	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, double precoProduto, String descProduto) {
 		if(!this.fornecedores.containsKey(nomeFornecedor)) {
-			return false;
+			throw new NullPointerException("Erro no cadastro de produto: fornecedor nao existe.");
 		}
 		return this.fornecedores.get(nomeFornecedor).adicionaProduto(nomeProduto, precoProduto, descProduto);
 	}

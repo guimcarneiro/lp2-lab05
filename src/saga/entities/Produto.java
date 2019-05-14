@@ -36,19 +36,19 @@ public class Produto {
 	 */
 	public Produto(String nome, double preco, String descricao) {
 		if(nome == null) {
-			throw new NullPointerException("O nome não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro de produto: nome nao pode ser vazio ou nulo.");
 		}
 		if(descricao == null){
-			throw new NullPointerException("A descrição não pode ser nula");
+			throw new NullPointerException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
 		}
 		if(nome.trim().isEmpty()) {
-			throw new IllegalArgumentException("O CPF não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro de produto: nome nao pode ser vazio ou nulo.");
 		}
 		if(preco < 0.0) {
-			throw new IllegalArgumentException("O preço não pode ser negativo");
+			throw new IllegalArgumentException("Erro no cadastro de produto: preco invalido.");
 		}
 		if(descricao.trim().isEmpty()) {
-			throw new IllegalArgumentException("O e-mail não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
 		}
 		
 		this.nome = nome;

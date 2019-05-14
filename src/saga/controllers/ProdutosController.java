@@ -32,20 +32,20 @@ public class ProdutosController {
 	 * preço válido e uma descrição. Caso sejam inseridos valores nulos ou vazios, será lançada NullPointerException
 	 * ou IllegalArgumentException, respectivamente. Para o caso de valores negativos para o preço
 	 * do produto, será lançada uma exceção IllegalArgumentException. Caso o produto que se quer cadastrar
-	 * já exista no sistema, retornará false. Um produto é identificado unicamente pelo seu nome e pela
+	 * já exista no sistema, lançará uma IllegalArgumentException. Um produto é identificado unicamente pelo seu nome e pela
 	 * sua descrição.
 	 * 
 	 * @param nome String com o nome do produto
 	 * @param preco double com preço do produto
  	 * @param descricao String com a descrição do produto
-	 * @return true para um cadastro válido, false caso contrário
+	 * @return true para um cadastro válido
 	 */
 	public boolean cadastraProduto(String nome, double preco, String descricao) {
 		if(!this.produtos.containsKey(nome)) {
 			this.produtos.put(nome, new Produto(nome, preco, descricao));
 			return true;
 		}
-		return false;
+		throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 	}
 	
 	/**

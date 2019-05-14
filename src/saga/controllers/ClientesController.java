@@ -38,12 +38,11 @@ public class ClientesController {
 	 * @param nome String que representa o nome do cliente
 	 * @param email String que representa o email do cliente
 	 * @param localizacao String que representa o laboratório de origem do cliente
-	 * @return String contendo o cpf do cliente cadastrado, caso o cadastro seja bem-sucedido, e null
-	 * caso contrário
+	 * @return String contendo o cpf do cliente cadastrado
 	 */
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
 		if(this.clientes.containsKey(cpf)) {
-			throw new IllegalArgumentException("Esse cliente já existe no sistema");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
 		this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
 		return cpf;
@@ -51,15 +50,14 @@ public class ClientesController {
 	
 	/**
 	 * Retorna uma String contendo as informações sobre um cliente. Caso não exista um cliente com
-	 * o cpf passado como parâmetro, será retornado null.
+	 * o cpf passado como parâmetro, lançará NullPointerException.
 	 * 
 	 * @param cpf String que representa o cpf do cliente que se quer buscar
-	 * @return String contendo informações sobre o cliente buscado, caso não exista tal cliente, será
-	 * retornado null
+	 * @return String contendo informações sobre o cliente buscado
 	 */
 	public String consultaCliente(String cpf) {
 		if(this.clientes.get(cpf) == null) {
-			return null;
+			throw new NullPointerException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 		return this.clientes.get(cpf).toString();
 	}
@@ -82,45 +80,48 @@ public class ClientesController {
 	}
 	
 	/**
-	 * Retorna booleano sobre o sucesso da edição do nome do cliente.
+	 * Retorna booleano sobre o sucesso da edição do nome do cliente. Caso o cliente não exista,
+	 * lança NullPointerException.
 	 * 
 	 * @param cpf String que representa o cpf do cliente
 	 * @param nome String que representa o novo nome que o cliente adotará
-	 * @return true para uma edição bem-sucedida, false caso contrário
+	 * @return true para uma edição bem-sucedida
 	 */
 	private boolean editaNomeCliente(String cpf, String nome) {
 		if(this.clientes.get(cpf) == null) {
-			return false;
+			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
 		this.clientes.get(cpf).setNome(nome);
 		return true;
 	}
 	
 	/**
-	 * Retorna booleano sobre o sucesso da edição do email do cliente.
+	 * Retorna booleano sobre o sucesso da edição do email do cliente. Caso o cliente não exista,
+	 * lança NullPointerException
 	 * 
 	 * @param cpf String que representa o cpf do cliente
 	 * @param email String que representa o novo email que o cliente adotará
-	 * @return true para uma edição bem-sucedida, false caso contrário
+	 * @return true para uma edição bem-sucedida
 	 */
 	private boolean editaEmailCliente(String cpf, String email) {
 		if(this.clientes.get(cpf) == null) {
-			return false;
+			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
 		this.clientes.get(cpf).setEmail(email);
 		return true;
 	}
 	
 	/**
-	 * Retorna booleano sobre o sucesso da edição da localizacao do cliente.
+	 * Retorna booleano sobre o sucesso da edição da localizacao do cliente. Caso o cliente não exista,
+	 * lança NullPointerException
 	 * 
 	 * @param cpf String que representa o cpf do cliente
 	 * @param localizacao String que representa o novo laboratório que o cliente adotará
-	 * @return true para uma edição bem-sucedida, false caso contrário
+	 * @return true para uma edição bem-sucedida
 	 */
 	private boolean editaLocalizacaoCliente(String cpf, String localizacao) {
 		if(this.clientes.get(cpf) == null) {
-			return false;
+			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
 		this.clientes.get(cpf).setLocalizacao(localizacao);
 		return true;
@@ -128,28 +129,41 @@ public class ClientesController {
 	
 	/**
 	 * Retorna um booleano sobre o sucesso da edição de uma informação de um cliente. Edita o atributo
-	 * do cliente com base no atributo passado como parâmetro. Retorna false caso o cliente passado
-	 * como parâmetro não exista no sistema.
+	 * do cliente com base no atributo passado como parâmetro. Caso o cliente não exista,
+	 * lança NullPointerException. Caso o atributo seja nulo lança uma NullPointerException.
+	 * Caso o atributo seja vazio lança uma IllegalArgumentException.
 	 * 
 	 * @param cpf String contendo o CPF do cliente que se quer editar
 	 * @param atributo String contendo o atributo do Cliente que se quer editar: nome, email ou localizacao
 	 * @param informacao String contendo a informacao que se quer substituir do atributo anterior, informacao nova
-	 * @return true para uma edição de Cliente bem-sucedida, false caso contrário
+	 * @return true para uma edição de Cliente bem-sucedida
 	 */
-	public boolean editaCliente(String cpf, String atributo, String informacao) {
+	public boolean editaCliente(String cpf, String atributo, String novoValor) {
+		if(atributo == null) {
+			throw new NullPointerException("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
+		}
+		if(atributo.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
+		}
+		if(novoValor == null) {
+			throw new NullPointerException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
+		}
+		if(novoValor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
+		}
 		if("nome".equals(atributo.toLowerCase())) {
-			this.editaNomeCliente(cpf, informacao);
+			this.editaNomeCliente(cpf, novoValor);
 			return true;
 		}
 		if("email".equals(atributo.toLowerCase())) {
-			this.editaEmailCliente(cpf, informacao);
+			this.editaEmailCliente(cpf, novoValor);
 			return true;
 		}
 		if("localizacao".equals(atributo.toLowerCase())) {
-			this.editaLocalizacaoCliente(cpf, informacao);
+			this.editaLocalizacaoCliente(cpf, novoValor);
 			return true;
 		}
-		return false;
+		throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");
 	}
 	
 	/**

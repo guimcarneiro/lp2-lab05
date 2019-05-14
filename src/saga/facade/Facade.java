@@ -1,5 +1,6 @@
 package saga.facade;
 
+import easyaccept.EasyAccept;
 import saga.controllers.ClientesController;
 import saga.controllers.FornecedoresController;
 
@@ -43,7 +44,7 @@ public class Facade {
 	 * @param localizacao String contendo o laboratório de origem do cliente(localização)
 	 * @return String contendo o CPF do cliente cadastrado quando o cadastro for bem-sucedido, null caso contrário
 	 */
-	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
+	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		return this.clientes.cadastraCliente(cpf, nome, email, localizacao);
 	}
 	
@@ -55,7 +56,7 @@ public class Facade {
 	 * @return String contendo informações sobre o cliente buscado, null caso não exista tal cliente no
 	 * sistema
 	 */
-	public String imprimeCliente(String cpf) {
+	public String exibeCliente(String cpf) {
 		return this.clientes.consultaCliente(cpf);
 	}
 
@@ -107,7 +108,7 @@ public class Facade {
 	 * @param telefone String contendo o telefone do fornecedor
 	 * @return String com o nome do fornecedor para um cadastro bem-sucedido
 	 */
-	public String cadastraFornecedor(String nome, String email, String telefone) {
+	public String adicionaFornecedor(String nome, String email, String telefone) {
 		return this.fornecedores.cadastraFornecedor(nome, email, telefone);
 	}
 
@@ -118,7 +119,7 @@ public class Facade {
 	 * @param nome String contendo o nome do fornecedor que se quer buscar
 	 * @return String contendo informações sobre o fornecedor buscado, null caso não exista tal fornecedor
 	 */
-	public String imprimeFornecedor(String nome) {
+	public String exibeFornecedor(String nome) {
 		return this.fornecedores.imprimeFornecedor(nome);
 	}
 
@@ -142,8 +143,8 @@ public class Facade {
 	 * @param informacao String contendo a nova informação que será sobreposta ao atributo passado no parâmetro "atributo"
 	 * @return true para uma edição de fornecedor bem-sucedida, false caso contrário
 	 */
-	public boolean editaFornecedor(String nome, String atributo, String informacao) {
-		return this.fornecedores.editaFornecedor(nome, atributo, informacao);
+	public boolean editaFornecedor(String nome, String atributo, String novoValor) {
+		return this.fornecedores.editaFornecedor(nome, atributo, novoValor);
 	}
 	
 	/**
@@ -171,8 +172,8 @@ public class Facade {
 	 * @param descProduto String contendo a descrição do produto que se quer cadastrar
 	 * @return true para um cadastro bem-sucedido, false caso contrário
 	 */
-	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, double precoProduto, String descProduto) {
-		return this.fornecedores.cadastraProduto(nomeFornecedor, nomeProduto, precoProduto, descProduto);
+	public boolean adicionaProduto(String fornecedor, String nome, String descricao, double preco) {
+		return this.fornecedores.cadastraProduto(fornecedor, nome, preco, descricao);
 	}
 
 	/**
@@ -221,5 +222,10 @@ public class Facade {
 	 */
 	public boolean removeProduto(String nomeFornecedor, String nomeProduto) {
 		return this.fornecedores.removeProduto(nomeFornecedor, nomeProduto);
+	}
+	
+	public static void main(String[] args) {
+		args = new String[] {"saga.facade.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt", "acceptance_tests/use_case_3.txt"};
+		EasyAccept.main(args);
 	}
 }

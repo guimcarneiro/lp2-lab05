@@ -33,9 +33,9 @@ public class Cliente {
 	/**
 	 * Constroi um Cliente a partir de um CPF, um nome, um e-mail e de seu laboratório correspondente.
 	 * Campos preenchidos com valores nulos ou vazios lançam NullPointerException e IllegalArgumentException,
-	 * respectivamente.
+	 * respectivamente. Caso o cpf não possua 11 dígitos, IllegalArguments será lançada.
 	 * 
-	 * @param cpf String referente ao CPF do Cliente
+	 * @param cpf String referente ao CPF do Cliente, deve possuir 11 dígitos
 	 * @param nome String referente ao nome do Cliente
 	 * @param email String referente ao e-mail do Cliente
 	 * @param localizacao String referente ao laboratório do qual o Cliente faz parte
@@ -45,25 +45,28 @@ public class Cliente {
 			throw new NullPointerException("O CPF não pode ser nulo");
 		}
 		if(nome == null) {
-			throw new NullPointerException("O nome não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
 		}
 		if(email == null){
-			throw new NullPointerException("O e-mail não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
 		}
 		if(localizacao == null) {
-			throw new NullPointerException("A localização não pode ser nula");
+			throw new NullPointerException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		}
 		if(cpf.trim().isEmpty()) {
 			throw new IllegalArgumentException("O CPF não pode ser vazio");
 		}
 		if(nome.trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
 		}
 		if(email.trim().isEmpty()) {
-			throw new IllegalArgumentException("O e-mail não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
 		}
 		if(localizacao.trim().isEmpty()) {
-			throw new IllegalArgumentException("A localização não pode ser vazia");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
+		}
+		if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf invalido.");
 		}
 		
 		this.cpf = cpf;

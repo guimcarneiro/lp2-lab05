@@ -42,19 +42,19 @@ public class Fornecedor {
 	 */
 	public Fornecedor(String nome, String email, String telefone) {
 		if(nome == null) {
-			throw new NullPointerException("O nome não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
 		}
 		if(email == null) {
-			throw new NullPointerException("O e-mail não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
 		}
 		if(telefone == null) {
 			throw new NullPointerException("O telefone não pode ser nulo");
 		}
 		if(nome.trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
 		}
 		if(email.trim().isEmpty()) {
-			throw new IllegalArgumentException("O e-mail não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
 		}
 		if(telefone.trim().isEmpty()) {
 			throw new IllegalArgumentException("O telefone não pode ser vazio");
