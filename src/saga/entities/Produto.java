@@ -118,4 +118,28 @@ public class Produto {
 	public String toString() {
 		return this.nome + " - " + this.descricao + " - R$" + String.format("%.2f", this.preco);
 	}
+	
+	/**
+	 * Retorna um booleano sobre a igualdade de um objeto qualquer e um Produto. Retornará true para objetos
+	 * do tipo Produto que possuírem o mesmo nome e descrição.
+	 * 
+	 * @param obj objeto qualquer que será comparado com o Produto
+	 * 
+	 * @return true quando o objeto comparado for do tipo Produto e possuir o nome e a descricao iguais ao que se compara
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(this.getClass() != obj.getClass()) {
+			return false;
+		}
+		Produto obj1 = (Produto) obj;
+		
+		if(this.nome.equals(obj1.nome) && this.descricao.equals(obj1.descricao)) {
+			return true;
+		}
+		return false;
+	}
 }

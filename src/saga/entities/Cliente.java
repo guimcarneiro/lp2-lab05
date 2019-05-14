@@ -155,4 +155,28 @@ public class Cliente {
 	public String toString() {
 		return this.nome + " - " + this.localizacao + " - " + this.email;
 	}
+	
+	/**
+	 * Retorna um booleano sobre a igualdade entre um objeto qualquer e um Cliente. Retornará true
+	 * quando o objeto comparado for do tipo Cliente e possuir o mesmo cpf do que o que se compara
+	 * 
+	 * @param obj objeto qualquer que será comparado ao Cliente
+	 * 
+	 * @return true quando o objeto comparado for do tipo Cliente e tiver o mesmo cpf do que o que se compara
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(this.getClass() != obj.getClass()) {
+			return false;
+		}
+		
+		Cliente obj1 = (Cliente) obj;
+		if(this.cpf.equals(obj1.cpf)) {
+			return true;
+		}
+		return false;
+	}
 }

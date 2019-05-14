@@ -194,6 +194,29 @@ public class Fornecedor {
 	}
 	
 	/**
+	 * Retorna um booleano sobre a igualdade entre um objeto e um Fornecedor. Retornará true para
+	 * objetos Fornecedor que possuírem o mesmo nome.
+	 * 
+	 * @param obj objeto qualquer a ser comparado com o fornecedor
+	 * 
+	 * @return true para um objeto Fornecedor que possui o mesmo nome que o com o que se compara
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(this.getClass() != obj.getClass()) {
+			return false;
+		}
+		
+		Fornecedor obj1 = (Fornecedor)obj;
+		if(this.nome.equals(obj1.nome)) {
+			return true;
+		}
+		return false;
+	}
+	/**
 	 * Retorna String com informações de um Fornecedor. Segue o formato:
 	 * "NOME_FORNECEDOR - EMAIL_FORNECEDOR - TELEFONE_FORNECEDOR"
 	 * 
