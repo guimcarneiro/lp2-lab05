@@ -66,7 +66,7 @@ public class Facade {
 	 * 
 	 * @return String contendo informações sobre todos os clientes já cadastrados no sistema
 	 */
-	public String listaClientes() {
+	public String exibeClientes() {
 		return this.clientes.consultaClientesAll();
 	}
 	
@@ -129,7 +129,7 @@ public class Facade {
 	 * 
 	 * @return String contendo todos os fornecedores já cadastrados
 	 */
-	public String listaFornecedores() {
+	public String exibeFornecedores() {
 		return this.fornecedores.imprimeFornecedoresAll();
 	}
 	
@@ -175,6 +175,21 @@ public class Facade {
 	public boolean adicionaProduto(String fornecedor, String nome, String descricao, double preco) {
 		return this.fornecedores.cadastraProduto(fornecedor, nome, preco, descricao);
 	}
+	
+	/**
+	 * Retorna String contendo informações sobre um produto. Recupera informações sobre um produto pertencente
+	 * a um fornecedor com base no nome do produto. Lança NullPointerException quando for passado um fornecedor
+	 * inexistente ou um produto inexistente. Lança IllegalArgumentException para parâmetros vazios. Lança NullPointerException
+	 * para parâmetros nulos.
+	 * 
+	 * @param nome String correspondente ao nome do produto
+	 * @param descricao String correspondente a descricao do produto
+	 * @param fornecedor String correspondente ao nome do fornecedor que possui o produto
+	 * @return String contendo informações sobre o produto buscado
+	 */
+	public String exibeProduto(String nome, String descricao, String fornecedor) {
+		return this.fornecedores.imprimeProduto(fornecedor, nome, descricao);
+	}
 
 	/**
 	 * Retorna uma String contendo informações sobre o fornecedor buscado. Caso seja passado o nome de
@@ -183,8 +198,8 @@ public class Facade {
 	 * @param nomeFornecedor String contendo o nome do fornecedor que se quer buscar
 	 * @return String contendo informações sobre o fornecedor buscado, null caso não exista tal fornecedor no sistema
 	 */
-	public String consultaProdutosFornecedor(String nomeFornecedor) {
-		return this.fornecedores.imprimeProdutosFornecedor(nomeFornecedor);
+	public String exibeProdutosFornecedor(String fornecedor) {
+		return this.fornecedores.imprimeProdutosFornecedor(fornecedor);
 	}
 
 	/**
@@ -193,7 +208,7 @@ public class Facade {
 	 * 
 	 * @return String contendo todos os produtos já cadastrados no sistema, de todos os fornecedores
 	 */
-	public String consultaProdutosAll() {
+	public String exibeProdutos() {
 		return this.fornecedores.imprimeProdutosAll();
 	}
 
@@ -208,8 +223,8 @@ public class Facade {
 	 * 
 	 * @return true para uma edição de preço de produto bem-sucedida, false caso contrário
 	 */
-	public boolean editaPrecoProduto(String nomeFornecedor, String nomeProduto, double precoProduto) {
-		return this.fornecedores.editarPrecoProduto(nomeFornecedor, nomeProduto, precoProduto);
+	public boolean editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double precoProduto) {
+		return this.fornecedores.editarPrecoProduto(nomeFornecedor, nomeProduto, descricao, precoProduto);
 	}
 
 	/**
@@ -220,12 +235,16 @@ public class Facade {
 	 * @param nomeProduto String contendo o nome do produto que se quer remover
 	 * @return true para uma remoção de produto bem-sucedida, false caso contrário
 	 */
-	public boolean removeProduto(String nomeFornecedor, String nomeProduto) {
-		return this.fornecedores.removeProduto(nomeFornecedor, nomeProduto);
+	public boolean removeProduto(String nome, String descricao, String fornecedor) {
+		return this.fornecedores.removeProduto(fornecedor, nome, descricao);
 	}
 	
 	public static void main(String[] args) {
-		args = new String[] {"saga.facade.Facade", "acceptance_tests/use_case_1.txt", "acceptance_tests/use_case_2.txt", "acceptance_tests/use_case_3.txt"};
+		args = new String[] {"saga.facade.Facade",
+				"acceptance_tests/use_case_1.txt",
+				"acceptance_tests/use_case_2.txt",
+				"acceptance_tests/use_case_3.txt",
+				"acceptance_tests/use_case_4.txt"};
 		EasyAccept.main(args);
 	}
 }

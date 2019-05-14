@@ -1,6 +1,7 @@
 package saga.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,8 @@ public class ProdutosController {
 			produtosAll.add(this.produtos.get(nomeProduto).toString());
 		}
 		
+		Collections.sort(produtosAll);
+		
 		return produtosAll;
 	}
 	
@@ -107,7 +110,7 @@ public class ProdutosController {
 			return false;
 		}
 		if(precoNovo < 0.0) {
-			return false;
+			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
 		}
 		this.produtos.get(nome).setPreco(precoNovo);
 		return true;

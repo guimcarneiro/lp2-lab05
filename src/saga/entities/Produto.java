@@ -7,7 +7,7 @@ package saga.entities;
  * @author Guilherme de Melo Carneiro
  *
  */
-public class Produto {
+public class Produto implements Comparable<Produto> {
 	
 	/**
 	 * String que representa o nome do produto. Um produto é identificado unicamente com base no seu nome e na sua descrição.
@@ -141,5 +141,18 @@ public class Produto {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Retorna um inteiro sobre a ordem de comparação entre dois Produtos. A ordenação acontece
+	 * com base na ordem alfabética entre os nomes.
+	 * 
+	 * @param Produto com o qual se quer comparar
+	 * 
+	 * @return antes na ordem alfabética: -1, iguais: 0, depois na ordem alfabética: 1
+	 */
+	@Override
+	public int compareTo(Produto o) {
+		return this.nome.compareToIgnoreCase(o.nome);
 	}
 }

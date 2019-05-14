@@ -1,6 +1,9 @@
 package saga.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import saga.entities.Cliente;
@@ -64,15 +67,25 @@ public class ClientesController {
 	
 	/**
 	 * Retorna uma String contendo as informações sobre todos os clientes cadastrados. Caso não haja
-	 * nenhum cliente cadastrado, será retornada uma String vazia.
+	 * nenhum cliente cadastrado, será retornada uma String vazia. A String retornada segue a ordem 
+	 * alfabetica baseada no nome dos clientes.
 	 * 
 	 * @return String contendo informações sobre todos os clientes já cadastrados
 	 */
 	public String consultaClientesAll() {
 		String mensagem = "";
+		
+		List<Cliente> clientes = new ArrayList<Cliente>();
 		for(String cpfCliente: this.clientes.keySet()) {
-			mensagem += this.clientes.get(cpfCliente).toString() + " | ";
+			clientes.add(this.clientes.get(cpfCliente));
 		}
+		
+		Collections.sort(clientes);
+		
+		for(int i=0; i<clientes.size(); i++) {
+			mensagem += clientes.get(i).toString() + " | ";
+		}
+		
 		if(!"".equals(mensagem)) {
 			mensagem = mensagem.substring(0, mensagem.length()-3);
 		}

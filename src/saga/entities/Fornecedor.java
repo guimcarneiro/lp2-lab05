@@ -10,7 +10,7 @@ import saga.controllers.ProdutosController;
  * @author Guilherme de Melo Carneiro
  *
  */
-public class Fornecedor {
+public class Fornecedor implements Comparable<Fornecedor>{
 
 	/**
 	 * String que representa o nome do respectivo Fornecedor. Identifica unicamente um Fornecedor.
@@ -178,6 +178,8 @@ public class Fornecedor {
 		}
 		if(!"".equals(mensagem)) {
 			mensagem = mensagem.substring(0, mensagem.length()-3);
+		}else {
+			mensagem = this.nome + " -";
 		}
 		return mensagem;
 	}
@@ -226,4 +228,19 @@ public class Fornecedor {
 	public String toString() {
 		return this.nome + " - " + this.email + " - " + this.telefone;
 	}
+
+	/**
+	 * Retorna inteiro sobre a ordem de um objeto Fornecedor em relação a outro. Caso o comparado venha depois, retorna
+	 * um valor negativo, caso sejam iguais retorna 0, caso o comparado venha antes retorna numero positivo. A comparação
+	 * acontece de acordo com a ordem alfabética entre os nomes.
+	 * 
+	 * @param f Fornecedor com o qual se quer comparar
+	 * @return antes na ordem alfabética: -1, iguais: 0, depois na ordem alfabética: 1
+	 */
+	@Override
+	public int compareTo(Fornecedor f) {
+		return this.nome.compareToIgnoreCase(f.nome);
+	}
+	
+	
 }

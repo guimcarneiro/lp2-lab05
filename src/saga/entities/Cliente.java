@@ -1,5 +1,6 @@
 package saga.entities;
 
+
 /**
  * Entidade que representa um Cliente no sistema Saga. Esse possui um CPF, um nome e um e-mail,
  * e é identificado unicamente pelo seu CPF.
@@ -7,7 +8,7 @@ package saga.entities;
  * @author Guilherme de Melo Carneiro
  *
  */
-public class Cliente {
+public class Cliente implements Comparable<Cliente>{
 
 	/**
 	 * Atributo correspondente ao CPF do Cliente. Identifica unicamente o Cliente, portanto
@@ -181,5 +182,18 @@ public class Cliente {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Retorna inteiro sobre a ordem de um objeto cliente em relação a outro. Caso o comparado venha depois, retorna
+	 * um valor negativo, caso sejam iguais retorna 0, caso o comparado venha antes retorna numero positivo. A comparação
+	 * acontece de acordo com a ordem alfabética entre os nomes.
+	 * 
+	 * @param c Cliente com o qual se quer comparar
+	 * @return antes na ordem alfabética: -1, iguais: 0, depois na ordem alfabética: 1
+	 */
+	@Override
+	public int compareTo(Cliente c) {
+		return this.nome.compareToIgnoreCase(c.nome);
 	}
 }
