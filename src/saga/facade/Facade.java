@@ -60,7 +60,7 @@ public class Facade {
 	}
 
 	/**
-	 * Retorna Strign contendo todos os clientes já cadastrados no sistema. Caso não haja clientes cadastrados,
+	 * Retorna String contendo todos os clientes já cadastrados no sistema. Caso não haja clientes cadastrados,
 	 * o sistema retornará uma String vazia.
 	 * 
 	 * @return String contendo informações sobre todos os clientes já cadastrados no sistema
@@ -96,15 +96,16 @@ public class Facade {
 	}
 	
 	/**
-	 * Retorna um booleano sobre o sucesso do cadastro de um fornecedor. Cadastra um fornecedor
+	 * Retorna uma String com o nome do fornecedor cadastrado. Cadastra um fornecedor
 	 * com base em seu nome, seu e-mail e seu telefone. Valores nulos ou vazios não são aceitos e
 	 * lançam NullPointerException e IllegalArgumentException, respectivamente. Um fornecedor é
-	 * identificado unicamente pelo seu nome.
+	 * identificado unicamente pelo seu nome. Tentativa de cadastro de um fornecedor já existente
+	 * lança uma IllegalArgumentException.
 	 *  
 	 * @param nome String contendo o nome do fornecedor
 	 * @param email String contendo o email do fornecedor
 	 * @param telefone String contendo o telefone do fornecedor
-	 * @return true para um cadastro bem-sucedido, false caso contrário
+	 * @return String com o nome do fornecedor para um cadastro bem-sucedido
 	 */
 	public String cadastraFornecedor(String nome, String email, String telefone) {
 		return this.fornecedores.cadastraFornecedor(nome, email, telefone);

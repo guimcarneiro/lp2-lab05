@@ -56,11 +56,10 @@ public class ProdutosController {
 	 * @return String com informações sobre o produto buscado, null caso não exista tal produto
 	 */
 	public String consultaProduto(String nome) {
-		try{
-			return this.produtos.get(nome).toString();
-		}catch(NullPointerException npe) {
+		if(this.produtos.get(nome) == null) {
 			return null;
 		}
+		return this.produtos.get(nome).toString();
 	}
 	
 	/**

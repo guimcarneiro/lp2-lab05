@@ -110,7 +110,7 @@ public class Produto {
 	
 	/**
 	 * Retorna uma String contendo informações sobre um produto. Essa String segue o seguinte o formato:
-	 * "NOME - DESCRICAO - R$X.YY"
+	 * "NOME - DESCRICAO - R$X.YY"preco
 	 * 
 	 * @return String com informações sobre o produto
 	 */
