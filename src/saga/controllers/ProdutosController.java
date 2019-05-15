@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import saga.entities.Combo;
 import saga.entities.Produto;
 
 /**
@@ -22,10 +23,15 @@ public class ProdutosController {
 	private Map<String, Produto> produtos;
 	
 	/**
+	 * 
+	 */
+	private Map<String, Combo> combos;
+	/**
 	 * Constroi um controlador de produtos.
 	 */
 	public ProdutosController() {
 		this.produtos = new HashMap<String, Produto>();
+		this.combos = new HashMap<String, Combo>();
 	}
 	
 	/**
@@ -49,6 +55,58 @@ public class ProdutosController {
 		throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 	}
 	
+	public boolean cadastraCombo(String nome, String descricao, double fator, String produtos) {
+		if(nome == null) {
+			throw new NullPointerException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(nome.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(descricao == null) {
+			throw new NullPointerException("Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
+		}
+		if(descricao.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
+		}
+		if(produtos == null) {
+			throw new NullPointerException("Erro no cadastro de combo: combo deve ter produtos.");
+		}
+		if(produtos.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
+		}
+		if(fator < 0.0 || fator  >= 1.0) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
+		}
+		
+		if(this.combos.containsKey(nome)) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo ja existe.");
+		}
+		//Confere se os produtos passados estão contidos nos Produtos cadastrados
+		List<String> prods = new ArrayList<String>();
+		
+		
+		for(String produto: produtos.split(", ")) {
+			String nomeProduto = produto.split(" - ")[0];
+			if(this.combos.containsKey(nomeProduto)) {
+				throw new IllegalArgumentException("Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
+			}
+			if(!this.produtos.containsKey(nomeProduto)) {
+				throw new NullPointerException("Erro no cadastro de combo: produto nao existe.");
+			}
+			prods.add(nomeProduto);
+		}
+		
+		//Adiciona os produtos a uma List que será passada para o Combo
+		List<Produto> produtosCombo = new ArrayList<Produto>();
+		
+		for(String nomeProduto: prods) {
+			produtosCombo.add(this.produtos.get(nomeProduto));
+		}
+		
+		this.combos.put(nome, new Combo(nome, descricao, produtosCombo, fator));
+		return true;
+		
+	}
 	/**
 	 * Retorna String com informações sobre o produto com o nome inserido como parâmetro. Caso não exista
 	 * tal produto, será retornado null.
@@ -57,8 +115,11 @@ public class ProdutosController {
 	 * @return String com informações sobre o produto buscado, null caso não exista tal produto
 	 */
 	public String consultaProduto(String nome) {
-		if(this.produtos.get(nome) == null) {
+		if(this.produtos.get(nome) == null && this.combos.get(nome) == null) {
 			return null;
+		}
+		if(this.produtos.get(nome) == null) {
+			return this.combos.get(nome).toString();
 		}
 		return this.produtos.get(nome).toString();
 	}
@@ -74,6 +135,9 @@ public class ProdutosController {
 		
 		for(String nomeProduto: this.produtos.keySet()) {
 			produtosAll.add(this.produtos.get(nomeProduto).toString());
+		}
+		for(String nomeProduto: this.combos.keySet()) {
+			produtosAll.add(this.combos.get(nomeProduto).toString());
 		}
 		
 		Collections.sort(produtosAll);

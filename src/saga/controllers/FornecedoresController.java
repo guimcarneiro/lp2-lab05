@@ -185,6 +185,41 @@ public class FornecedoresController {
 		return this.fornecedores.get(nomeFornecedor).adicionaProduto(nomeProduto, precoProduto, descProduto);
 	}
 	
+	public boolean adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator, String produtos) {
+		if(nomeFornecedor == null) {
+			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(nomeFornecedor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		/*if(nomeCombo == null) {
+			throw new NullPointerException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(nomeCombo.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(descricao == null) {
+			throw new NullPointerException("Erro no cadastro de combo: descricao nao pode ser vazio ou nulo.");
+		}
+		if(descricao.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: descricao nao pode ser vazio ou nulo.");
+		}
+		if(produtos == null) {
+			throw new NullPointerException("Erro no cadastro de combo: combo deve ter produtos.");
+		}
+		if(produtos.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
+		}*/
+		
+		if(this.fornecedores.get(nomeFornecedor) == null) {
+			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao existe.");
+		}
+		//try {
+		return this.fornecedores.get(nomeFornecedor).adicionaCombo(nomeCombo, descricao, fator, produtos);
+		//}catch(Exception e) {
+		//	throw new IllegalArgumentException("ERRO EM FORNECEDORESCONTROLLER - adicionaCombo");
+		//}
+	}
 	/**
 	 * Retorna uma String com informações sobre um produto de um fornecedor e um nome passados como
 	 * parâmetro. Caso não exista o fornecedor passado como parâmetro, retornará null. Caso não exista
@@ -220,6 +255,8 @@ public class FornecedoresController {
 		if(this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto) == null) {
 			throw new NullPointerException("Erro na exibicao de produto: produto nao existe.");
 		}
+		
+		
 		return this.fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto);
 	}
 	

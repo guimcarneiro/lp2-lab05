@@ -176,6 +176,9 @@ public class Facade {
 		return this.fornecedores.cadastraProduto(fornecedor, nome, preco, descricao);
 	}
 	
+	public boolean adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+		return this.fornecedores.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
+	}
 	/**
 	 * Retorna String contendo informações sobre um produto. Recupera informações sobre um produto pertencente
 	 * a um fornecedor com base no nome do produto. Lança NullPointerException quando for passado um fornecedor
@@ -244,7 +247,8 @@ public class Facade {
 				"acceptance_tests/use_case_1.txt",
 				"acceptance_tests/use_case_2.txt",
 				"acceptance_tests/use_case_3.txt",
-				"acceptance_tests/use_case_4.txt"};
+				"acceptance_tests/use_case_4.txt",
+				"acceptance_tests/use_case_5.txt"};
 		EasyAccept.main(args);
 	}
 }
