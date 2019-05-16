@@ -125,11 +125,7 @@ public class Fornecedor implements Comparable<Fornecedor>{
 	}
 	
 	public boolean adicionaCombo(String nome, String descricao, double fator, String produtos) {
-		//try {
 		return this.produtos.cadastraCombo(nome, descricao, fator, produtos);
-		//}catch(Exception e) {
-		//	throw new IllegalArgumentException("ERRO EM FORNECEDOR");
-		//}
 	}
 	/**
 	 * Retorna um booleano sobre o sucesso da operação de remover um produto adicionado 

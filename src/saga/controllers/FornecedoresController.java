@@ -214,11 +214,8 @@ public class FornecedoresController {
 		if(this.fornecedores.get(nomeFornecedor) == null) {
 			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
-		//try {
+		
 		return this.fornecedores.get(nomeFornecedor).adicionaCombo(nomeCombo, descricao, fator, produtos);
-		//}catch(Exception e) {
-		//	throw new IllegalArgumentException("ERRO EM FORNECEDORESCONTROLLER - adicionaCombo");
-		//}
 	}
 	/**
 	 * Retorna uma String com informações sobre um produto de um fornecedor e um nome passados como

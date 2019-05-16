@@ -12,6 +12,8 @@ import saga.controllers.FornecedoresController;
  */
 public class Facade {
 
+	//TODO: Trocar Comparable por Comparator
+	
 	/**
 	 * Controlador de Clientes. Responsável por gerir clientes: cadastrar, listar, editar e remover clientes.
 	 */

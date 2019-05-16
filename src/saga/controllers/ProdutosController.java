@@ -131,17 +131,18 @@ public class ProdutosController {
 	 * @return List de String contendo informações sobre cada produto
 	 */
 	public List<String> listaProdutos() {
-		List<String> produtosAll = new ArrayList<String>();
 		
-		for(String nomeProduto: this.produtos.keySet()) {
-			produtosAll.add(this.produtos.get(nomeProduto).toString());
-		}
-		for(String nomeProduto: this.combos.keySet()) {
-			produtosAll.add(this.combos.get(nomeProduto).toString());
-		}
+		List<Produto> produtosAll = new ArrayList<Produto>(this.produtos.values());
+		produtosAll.addAll(this.combos.values());
+		
 		Collections.sort(produtosAll);
 		
-		return produtosAll;
+		List<String> produtosToStringSorted = new ArrayList<String>();
+		for(Produto prod1: produtosAll) {
+			produtosToStringSorted.add(prod1.toString());
+		}
+		
+		return produtosToStringSorted;
 	}
 	
 	/**
