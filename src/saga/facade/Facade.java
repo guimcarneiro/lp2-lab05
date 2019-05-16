@@ -176,6 +176,15 @@ public class Facade {
 		return this.fornecedores.cadastraProduto(fornecedor, nome, preco, descricao);
 	}
 	
+	/**
+	 * 
+	 * @param fornecedor
+	 * @param nome
+	 * @param descricao
+	 * @param fator
+	 * @param produtos
+	 * @return
+	 */
 	public boolean adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 		return this.fornecedores.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
 	}

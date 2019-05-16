@@ -139,7 +139,6 @@ public class ProdutosController {
 		for(String nomeProduto: this.combos.keySet()) {
 			produtosAll.add(this.combos.get(nomeProduto).toString());
 		}
-		
 		Collections.sort(produtosAll);
 		
 		return produtosAll;

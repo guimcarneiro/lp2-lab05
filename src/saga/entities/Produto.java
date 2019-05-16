@@ -153,6 +153,6 @@ public class Produto implements Comparable<Produto> {
 	 */
 	@Override
 	public int compareTo(Produto o) {
-		return this.nome.compareToIgnoreCase(o.nome);
+		return this.nome.trim().compareToIgnoreCase(o.nome.trim());
 	}
 }
