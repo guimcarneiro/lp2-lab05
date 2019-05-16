@@ -376,6 +376,29 @@ public class FornecedoresController {
 	}
 	
 	/**
+	 * 
+	 * @param nome
+	 * @param descricao
+	 * @param fornecedor
+	 * @param novoFator
+	 * @return
+	 */
+	public boolean editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
+		if(fornecedor == null) {
+			throw new NullPointerException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(fornecedor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(this.fornecedores.get(fornecedor) == null) {
+			throw new NullPointerException("Erro na edicao de combo: fornecedor nao existe.");
+		}
+		
+		return this.fornecedores.get(fornecedor).editaCombo(nome, descricao, novoFator);
+		
+	}
+	
+	/**
 	 * Retorna um booleano sobre o sucesso da remoção de um produto de um fornecedor. Caso não exista
 	 * o fornecedor inserido, retornará false. Caso não exista o produto inserido, retornará false.
 	 * 

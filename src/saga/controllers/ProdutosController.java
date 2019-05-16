@@ -153,11 +153,16 @@ public class ProdutosController {
 	 * @return true para uma remoção bem-sucedida, false caso contrário
 	 */
 	public boolean removeProduto(String nome) {
-		if(!this.produtos.containsKey(nome)) {
-			return false;
+		if(this.produtos.containsKey(nome)) {
+			this.produtos.remove(nome);
+			return true;
 		}
-		this.produtos.remove(nome);
-		return true;
+		else if(this.combos.containsKey(nome)) {
+			this.combos.remove(nome);
+			return true;
+		}
+		
+		throw new NullPointerException("Erro na remocao de produto: produto nao existe.");
 	}
 	
 	/**
@@ -177,6 +182,31 @@ public class ProdutosController {
 			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
 		}
 		this.produtos.get(nome).setPreco(precoNovo);
+		return true;
+	}
+	
+	public boolean editaCombo(String nome, String descricao, double novoFator) {
+		if(nome == null) {
+			throw new NullPointerException("Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(nome.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(descricao == null) {
+			throw new NullPointerException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
+		}
+		if(descricao.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
+		}
+		if(novoFator <= 0.0 || novoFator >= 1.0) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fator invalido.");
+		}
+		
+		if(!this.combos.containsKey(nome)) {
+			throw new NullPointerException("Erro na edicao de combo: produto nao existe.");
+		}
+		
+		this.combos.get(nome).setFator(novoFator);
 		return true;
 	}
 	

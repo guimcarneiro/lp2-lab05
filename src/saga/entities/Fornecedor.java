@@ -127,6 +127,7 @@ public class Fornecedor implements Comparable<Fornecedor>{
 	public boolean adicionaCombo(String nome, String descricao, double fator, String produtos) {
 		return this.produtos.cadastraCombo(nome, descricao, fator, produtos);
 	}
+	
 	/**
 	 * Retorna um booleano sobre o sucesso da operação de remover um produto adicionado 
 	 * anteriormente com base em seu nome. 
@@ -135,9 +136,6 @@ public class Fornecedor implements Comparable<Fornecedor>{
 	 * @return true para uma remoção bem-sucedida, false caso contrário
 	 */
 	public boolean removeProduto(String nome) {
-		if(!this.produtos.existeProduto(nome)) {
-			return false;
-		}
 		return this.produtos.removeProduto(nome);
 	}
 	
@@ -166,6 +164,9 @@ public class Fornecedor implements Comparable<Fornecedor>{
 		return this.produtos.editaPrecoProduto(nome, precoNovo);
 	}
 	
+	public boolean editaCombo(String nome, String descricao, double novoFator) {
+		return this.produtos.editaCombo(nome, descricao, novoFator);
+	}
 	/**
 	 * Retorna String com todos os produtos de um fornecedor. Caso não haja produtos cadastrados, será
 	 * retornado uma String vazia. Possuindo Produtos cadastrados, seguirá o seguinte formato:

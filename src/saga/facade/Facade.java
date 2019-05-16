@@ -240,6 +240,18 @@ public class Facade {
 	public boolean editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double precoProduto) {
 		return this.fornecedores.editarPrecoProduto(nomeFornecedor, nomeProduto, descricao, precoProduto);
 	}
+	
+	/**
+	 * 
+	 * @param nome
+	 * @param descricao
+	 * @param fornecedor
+	 * @param novoFator
+	 * @return
+	 */
+	public boolean editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
+		return this.fornecedores.editaCombo(nome, descricao, fornecedor, novoFator);
+	}
 
 	/**
 	 * Retorna um booleano sobre o sucesso da remoção de um produto. Caso o nome do produto passado

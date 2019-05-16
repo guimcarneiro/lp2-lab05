@@ -8,7 +8,12 @@ import java.util.List;
  *
  */
 public class Combo extends Produto{
-
+	
+	/**
+	 * 
+	 */
+	private double precoOriginal;
+	
 	/**
 	 * 
 	 */
@@ -33,6 +38,7 @@ public class Combo extends Produto{
 		for(Produto produto: produtos) {
 			preco += produto.getPreco();
 		}
+		this.precoOriginal = preco;
 		super.setPreco(preco*(1.0-fator));
 		
 		this.fator = fator;
@@ -52,7 +58,11 @@ public class Combo extends Produto{
 	 * @param fator
 	 */
 	public void setFator(double fator) {
+		if(fator < 0.0 || fator >= 1.0) {
+			throw new IllegalArgumentException("Fator inválido");
+		}
 		this.fator = fator;
+		this.setPreco(this.precoOriginal*(1.0-this.fator));
 	}
 	
 	/**
@@ -62,6 +72,4 @@ public class Combo extends Produto{
 	public List<Produto> getProdutos(){
 		return this.produtos;
 	}
-	
-	//TODO: getProdutos
 }
