@@ -48,7 +48,7 @@ public class Fornecedor implements Comparable<Fornecedor>{
 			throw new NullPointerException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
 		}
 		if(telefone == null) {
-			throw new NullPointerException("O telefone não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
 		}
 		if(nome.trim().isEmpty()) {
 			throw new IllegalArgumentException("Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
@@ -57,7 +57,7 @@ public class Fornecedor implements Comparable<Fornecedor>{
 			throw new IllegalArgumentException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
 		}
 		if(telefone.trim().isEmpty()) {
-			throw new IllegalArgumentException("O telefone não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
 		}
 		
 		this.nome = nome;
@@ -149,6 +149,10 @@ public class Fornecedor implements Comparable<Fornecedor>{
 	 */
 	public String consultaProduto(String nome) {
 		return this.produtos.consultaProduto(nome);
+	}
+	
+	public Produto getProduto(String nome) {
+		return this.produtos.getProduto(nome);
 	}
 	
 	/**

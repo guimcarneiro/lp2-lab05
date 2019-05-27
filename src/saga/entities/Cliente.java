@@ -43,7 +43,7 @@ public class Cliente implements Comparable<Cliente>{
 	 */
 	public Cliente(String cpf, String nome, String email, String localizacao) {
 		if(cpf == null) {
-			throw new NullPointerException("O CPF não pode ser nulo");
+			throw new NullPointerException("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
 		}
 		if(nome == null) {
 			throw new NullPointerException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
@@ -55,7 +55,7 @@ public class Cliente implements Comparable<Cliente>{
 			throw new NullPointerException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		}
 		if(cpf.trim().isEmpty()) {
-			throw new IllegalArgumentException("O CPF não pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
 		}
 		if(nome.trim().isEmpty()) {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");

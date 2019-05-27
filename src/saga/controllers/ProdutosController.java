@@ -34,6 +34,16 @@ public class ProdutosController {
 		this.combos = new HashMap<String, Combo>();
 	}
 	
+	public Produto getProduto(String nome) {
+		if(this.produtos.containsKey(nome)) {
+			return this.produtos.get(nome);
+		}
+		if(this.combos.containsKey(nome)) {
+			return this.combos.get(nome);
+		}
+		return null;
+	}
+	
 	/**
 	 * Retorna um booleano sobre o sucesso do cadastro de um produto. Um produto possui um nome, um
 	 * preço válido e uma descrição. Caso sejam inseridos valores nulos ou vazios, será lançada NullPointerException

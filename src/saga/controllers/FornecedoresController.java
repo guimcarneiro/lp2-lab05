@@ -30,6 +30,15 @@ public class FornecedoresController {
 	}
 	
 	/**
+	 * 
+	 * @param fornecedor
+	 * @return
+	 */
+	public boolean existeFornecedor(String fornecedor) {
+		return this.fornecedores.containsKey(fornecedor);
+	}
+	
+	/**
 	 * Retorna uma String com o nome do fornecedor cadastrado. Cadastra um fornecedor
 	 * com base em seu nome, seu email e seu telefone. Não se pode cadastrar mais de um fornecedor
 	 * com o mesmo nome. Caso o fornecedor que se quer cadastrar já exista no sistema, será retornado
@@ -58,6 +67,12 @@ public class FornecedoresController {
 	 * @return true para uma edição de email bem-sucedida, false caso contrário
 	 */
 	private boolean editaEmailFornecedor(String nome, String emailNovo) {
+		if(nome == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
+		if(nome.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
 		if(!this.fornecedores.containsKey(nome)) {
 			return false;
 		}
@@ -74,6 +89,12 @@ public class FornecedoresController {
 	 * @return true para uma edição de telefone bem-sucedida, false caso contrário
 	 */
 	private boolean editaTelefoneFornecedor(String nome, String telefoneNovo) {
+		if(nome == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
+		if(nome.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
 		if(!this.fornecedores.containsKey(nome)) {
 			return false;
 		}
@@ -94,8 +115,14 @@ public class FornecedoresController {
 	 * @return true para uma edição de informação de fornecedor bem-sucedida
 	 */
 	public boolean editaFornecedor(String nome, String atributo, String informacao) {
+		if(nome == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
+		if(nome.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
 		if(!this.fornecedores.containsKey(nome)) {
-			throw new NullPointerException("Erro na exibicao do fornecedor: fornecedor nao existe.");
+			throw new NullPointerException("Erro na edicao do fornecedor: fornecedor nao existe.");
 		}
 		if(atributo == null) {
 			throw new NullPointerException("Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
@@ -192,25 +219,6 @@ public class FornecedoresController {
 		if(nomeFornecedor.trim().isEmpty()) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
 		}
-		/*if(nomeCombo == null) {
-			throw new NullPointerException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
-		}
-		if(nomeCombo.trim().isEmpty()) {
-			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
-		}
-		if(descricao == null) {
-			throw new NullPointerException("Erro no cadastro de combo: descricao nao pode ser vazio ou nulo.");
-		}
-		if(descricao.trim().isEmpty()) {
-			throw new IllegalArgumentException("Erro no cadastro de combo: descricao nao pode ser vazio ou nulo.");
-		}
-		if(produtos == null) {
-			throw new NullPointerException("Erro no cadastro de combo: combo deve ter produtos.");
-		}
-		if(produtos.trim().isEmpty()) {
-			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
-		}*/
-		
 		if(this.fornecedores.get(nomeFornecedor) == null) {
 			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
@@ -435,5 +443,7 @@ public class FornecedoresController {
 		return true;
 	}
 	
-	
+	public Fornecedor getFornecedor(String nome) {
+		return this.fornecedores.get(nome);
+	}
 }

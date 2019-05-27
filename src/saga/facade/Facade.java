@@ -1,8 +1,11 @@
 package saga.facade;
 
+import java.text.DecimalFormat;
+
 import easyaccept.EasyAccept;
 import saga.controllers.ClientesController;
 import saga.controllers.FornecedoresController;
+import saga.services.FornecedorService;
 
 /**
  * Fachada de métodos do Sistema SAGA. Contém todos os métodos necessários para gerir
@@ -265,13 +268,31 @@ public class Facade {
 		return this.fornecedores.removeProduto(fornecedor, nome, descricao);
 	}
 	
+	public boolean adicionaCompra(String cpf, String fornecedor, String data, String nome_prod, String desc_prod) {
+		return this.clientes.adicionaCompra(cpf, fornecedor, data, nome_prod, desc_prod, new FornecedorService(this.fornecedores));
+	}
+	
+	public String getDebito(String cpf, String fornecedor) {
+		return new DecimalFormat("####.00").format(this.clientes.getDebitoFornecedor(cpf, fornecedor, new FornecedorService(this.fornecedores))).replaceAll(",", ".");
+		//return this.clientes.getDebitoFornecedor(cpf, fornecedor, new FornecedorService(this.fornecedores));
+	}
+	
+	public String exibeContas(String cpf, String fornecedor) {
+		return this.clientes.exibeConta(cpf, fornecedor, new FornecedorService(this.fornecedores));
+	}
+	
+	public String exibeContasClientes(String cpf) {
+		return this.clientes.exibeContasAll(cpf);
+	}
+	
 	public static void main(String[] args) {
 		args = new String[] {"saga.facade.Facade",
 				"acceptance_tests/use_case_1.txt",
 				"acceptance_tests/use_case_2.txt",
 				"acceptance_tests/use_case_3.txt",
 				"acceptance_tests/use_case_4.txt",
-				"acceptance_tests/use_case_5.txt"};
+				"acceptance_tests/use_case_5.txt",
+				"acceptance_tests/use_case_6.txt"};
 		EasyAccept.main(args);
 	}
 }

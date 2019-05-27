@@ -1,12 +1,16 @@
 package saga.controllers;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import saga.entities.Cliente;
+import saga.services.FornecedorService;
 /**
  * Essa classe gerencia Clientes: cadastra, edita, remove e retorna clientes. Representa um
  * controlador de clientes.
@@ -23,10 +27,16 @@ public class ClientesController {
 	private Map<String, Cliente> clientes;
 	
 	/**
+	 * Chave é o cpf do cliente
+	 */
+	private Map<String, ContasController> contas;
+	
+	/**
 	 * Constroi um controlador de Clientes.
 	 */
 	public ClientesController() {
 		this.clientes = new HashMap<String, Cliente>();
+		this.contas = new HashMap<String, ContasController>();
 	}
 	
 	/**
@@ -59,6 +69,12 @@ public class ClientesController {
 	 * @return String contendo informações sobre o cliente buscado
 	 */
 	public String consultaCliente(String cpf) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro na exibicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
 		if(this.clientes.get(cpf) == null) {
 			throw new NullPointerException("Erro na exibicao do cliente: cliente nao existe.");
 		}
@@ -101,6 +117,12 @@ public class ClientesController {
 	 * @return true para uma edição bem-sucedida
 	 */
 	private boolean editaNomeCliente(String cpf, String nome) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
 		if(this.clientes.get(cpf) == null) {
 			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
@@ -133,6 +155,12 @@ public class ClientesController {
 	 * @return true para uma edição bem-sucedida
 	 */
 	private boolean editaLocalizacaoCliente(String cpf, String localizacao) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
 		if(this.clientes.get(cpf) == null) {
 			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
@@ -176,6 +204,9 @@ public class ClientesController {
 			this.editaLocalizacaoCliente(cpf, novoValor);
 			return true;
 		}
+		if("cpf".equals(atributo.toLowerCase())) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser editado.");
+		}
 		throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");
 	}
 	
@@ -187,9 +218,167 @@ public class ClientesController {
 	 * @return true para uma remoção de um cliente bem-sucedida, false caso contrário
 	 */
 	public boolean removeCliente(String cpf) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		}
+		if(this.clientes.get(cpf) == null) {
+			throw new NullPointerException("Erro na remocao do cliente: cliente nao existe.");
+		}
 		if(this.clientes.remove(cpf) != null) {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean adicionaCompra(String cpf, String fornecedor, String dataStr, String nome_prod, String desc_prod, FornecedorService fornecedorService) {
+		Date data = new Date();
+		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+				
+		if(cpf == null) {
+			throw new NullPointerException("Erro ao cadastrar compra: cpf nulo ou vazio.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: cpf nulo ou vazio.");
+		}
+		if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: cpf invalido.");
+		}
+		if(fornecedor == null) {
+			throw new NullPointerException("Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(fornecedor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(dataStr == null) {
+			throw new NullPointerException("Erro ao cadastrar compra: data nao pode ser vazia ou nula.");
+		}
+		if(dataStr.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: data nao pode ser vazia ou nula.");
+		}
+		try {
+			int contador = 0;
+			for(String dataTeste: dataStr.split("/")) {
+				if(contador == 0) {
+					if(Integer.parseInt(dataTeste)<1 || Integer.parseInt(dataTeste)>31) {
+						throw new IllegalArgumentException("Erro ao cadastrar compra: data invalida.");
+					}
+				}
+				if(contador == 1) {
+					if(Integer.parseInt(dataTeste)<1 || Integer.parseInt(dataTeste)>12) {
+						throw new IllegalArgumentException("Erro ao cadastrar compra: data invalida.");
+					}
+				}
+				contador++;
+			}
+			data = formatoData.parse(dataStr);
+		}catch(Exception e) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: data invalida.");
+		}
+		if(nome_prod == null) {
+			throw new NullPointerException("Erro ao cadastrar compra: nome do produto nao pode ser vazio ou nulo.");
+		}
+		if(nome_prod.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: nome do produto nao pode ser vazio ou nulo.");
+		}
+		if(desc_prod == null) {
+			throw new NullPointerException("Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula.");
+		}
+		if(desc_prod.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula.");
+		}
+		if(this.clientes.get(cpf) == null) {
+			throw new NullPointerException("Erro ao cadastrar compra: cliente nao existe.");
+		}
+		
+		if(fornecedorService.existeFornecedor(fornecedor)) {
+			if(fornecedorService.getProduto(fornecedor, nome_prod) == null){
+				throw new NullPointerException("Erro ao cadastrar compra: produto nao existe.");
+			}
+			if(!this.contas.containsKey(cpf)) {
+				this.contas.put(cpf, new ContasController());
+			}
+			this.contas.get(cpf).adicionaCompra(cpf, fornecedor, data, fornecedorService.getProduto(fornecedor, nome_prod)); //adiciona o produto na conta
+			return true;
+		}
+		
+		throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao existe.");
+	}
+	
+	public double getDebitoFornecedor(String cpf, String fornecedor, FornecedorService fornecedorService) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cpf invalido.");
+		}
+		if(fornecedor == null) {
+			throw new NullPointerException("Erro ao recuperar debito: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(fornecedor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(this.contas.get(cpf) == null) {
+			throw new NullPointerException("Erro ao recuperar debito: cliente nao existe.");
+		}
+		if(!fornecedorService.existeFornecedor(fornecedor)) {
+			throw new NullPointerException("Erro ao recuperar debito: fornecedor nao existe.");
+		}
+		return this.contas.get(cpf).getDebitoFornecedor(fornecedor);
+	}
+	
+	//Exibe Conta do cliente
+	public String exibeConta(String cpf, String fornecedor, FornecedorService fornecedorService) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: cpf invalido.");
+		}
+		if(this.contas.get(cpf) == null) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao existe.");
+		}
+		if(fornecedor == null) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(fornecedor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(!fornecedorService.existeFornecedor(fornecedor)) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: fornecedor nao existe.");
+		}
+		if(!this.contas.get(cpf).existeContaFornecedor(fornecedor)) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		}
+		
+		return this.contas.get(cpf).imprimeConta(fornecedor, this.clientes.get(cpf).getNome());
+	}
+	
+	public String exibeContasAll(String cpf) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro ao exibir contas do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cpf invalido.");
+		}
+		if(this.clientes.get(cpf) == null) {
+			throw new NullPointerException("Erro ao exibir contas do cliente: cliente nao existe.");
+		}
+		if(this.contas.get(cpf) == null) {
+			throw new NullPointerException("Erro ao exibir contas do cliente: cliente nao tem nenhuma conta.");
+		}
+		
+		return this.contas.get(cpf).imprimeContasAll(this.clientes.get(cpf).getNome());
 	}
 }
