@@ -14,8 +14,6 @@ import saga.services.FornecedorService;
  * @author Guilherme de Melo Carneiro
  */
 public class Facade {
-
-	//TODO: Trocar Comparable por Comparator
 	
 	/**
 	 * Controlador de Clientes. Responsável por gerir clientes: cadastrar, listar, editar e remover clientes.
@@ -246,11 +244,14 @@ public class Facade {
 	
 	/**
 	 * 
-	 * @param nome
-	 * @param descricao
-	 * @param fornecedor
-	 * @param novoFator
-	 * @return
+	 * Retorna booleano sobre o sucesso da edição do fator multiplicador de um Combo já cadastrado. Não
+	 * aceita valores negativos. Lança IllegalArgumentException para valores negativos de novoFator.
+	 * 
+	 * @param nome nome do combo
+	 * @param descricao descricao do combo
+	 * @param fornecedor fornecedor que possui o compo
+	 * @param novoFator novo fator a ser redefinido, não pode ser negativo
+	 * @return true para uma edição bem-sucedida, false caso contrário
 	 */
 	public boolean editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
 		return this.fornecedores.editaCombo(nome, descricao, fornecedor, novoFator);
@@ -258,7 +259,8 @@ public class Facade {
 
 	/**
 	 * Retorna um booleano sobre o sucesso da remoção de um produto. Caso o nome do produto passado
-	 * não esteja cadastrado no sistema, será retornado false.
+	 * não esteja cadastrado no sistema, será retornado false. Lança Exceptions para valores nulos ou vazios passados
+	 * como parâmetro.
 	 * 
 	 * @param nomeFornecedor String contendo o nome do fornecedor que possui o produto que se quer remover
 	 * @param nomeProduto String contendo o nome do produto que se quer remover
@@ -268,23 +270,65 @@ public class Facade {
 		return this.fornecedores.removeProduto(fornecedor, nome, descricao);
 	}
 	
+	/**
+	 * Retorna booleano sobre o sucesso de uma compra de um produto. Lança NullPointerException ou IllegalArgumentException
+	 * para valores nulos ou vazios passados como parâmetros, respectivamente.
+	 * 
+	 * @param cpf String com o cpf do cliente que faz a compra
+	 * @param fornecedor String com o fornecedor dono do produto que se está comprando
+	 * @param data String com a data da compra do produto
+	 * @param nome_prod String com o nome do produto a ser comprado
+	 * @param desc_prod String com a descricao do produto a ser comprado
+	 * @return true para uma compra bem-sucedida, false caso contrário
+	 */
 	public boolean adicionaCompra(String cpf, String fornecedor, String data, String nome_prod, String desc_prod) {
 		return this.clientes.adicionaCompra(cpf, fornecedor, data, nome_prod, desc_prod, new FornecedorService(this.fornecedores));
 	}
 	
+	/**
+	 * Retorna um double contendo o valor do débito do cliente passado como parâmetro. Lança Exceptions para valores nulos ou
+	 * vazios passados como parâmetros(NullPointerException e IllegalArgumentException, respectivamente). Lança Exceptions
+	 * para casos em que o cliente não exista, o fornecedor não exista ou a conta não exista.
+	 * 
+	 * @param cpf String contendo o cpf do cliente que possui a conta que possui o debito
+	 * @param fornecedor fornecedor que possui a conta do débito
+	 * @return double contendo o débito do cliente
+	 */
 	public String getDebito(String cpf, String fornecedor) {
 		return new DecimalFormat("####.00").format(this.clientes.getDebitoFornecedor(cpf, fornecedor, new FornecedorService(this.fornecedores))).replaceAll(",", ".");
-		//return this.clientes.getDebitoFornecedor(cpf, fornecedor, new FornecedorService(this.fornecedores));
 	}
 	
+	/**
+	 * Retorna String contendo a conta do cliente respectivo ao fornecedor buscado. Lança Exceptions para valores
+	 * nulos ou vazios passados como parâmetro. Caso não exista a conta buscada respectiva ao fornecedor passado,
+	 * lançará Exception. Caso uma conta seja paga totalmente ela é finalizada.
+	 * 
+	 * @param cpf String contendo o cpf do cliente que possui a conta
+	 * @param fornecedor String contendo o nome do fornecedor nominal a conta do cliente
+	 * @return String contendo informaçoes sobre a conta do cliente a determinado fornecedor
+	 */
 	public String exibeContas(String cpf, String fornecedor) {
 		return this.clientes.exibeConta(cpf, fornecedor, new FornecedorService(this.fornecedores));
 	}
 	
+	/**
+	 * Retorna String contendo todas as contas que os clientes possuem aos respectivos fornecedores. Contas com débitos
+	 * zerados são apagadas do sistema. Lança Exceptions para cpf nulo ou vazio passado como parâmetro.
+	 * 
+	 * @param cpf String contendo cpf do cliente a ser buscado as contas
+	 * @return String contendo informações sobre todas as contas que o cliente possui
+	 */
 	public String exibeContasClientes(String cpf) {
 		return this.clientes.exibeContasAll(cpf);
 	}
 	
+	/**
+	 * Não possui retorno. Zera débito do cliente em relação a determinado fornecedor. Uma vez que o débito é zerado,
+	 * a conta é apagada do sistema. Lança Exceptions para parâmetros nulos ou vazios.
+	 * 
+	 * @param cpf String contendo o cpf do cliente
+	 * @param fornecedor String contendo o nome do fornecedor
+	 */
 	public void realizaPagamento(String cpf, String fornecedor) {
 		this.clientes.realizaPagamento(cpf, fornecedor, new FornecedorService(this.fornecedores));
 	}
