@@ -10,16 +10,19 @@ public class Conta {
 
 	private String cpf;
 	private String fornecedor;
+	private double debito;
 	private List<Compra> compras;
 	
 	public Conta(String cpf, String fornecedor) {
 		this.cpf = cpf;
 		this.fornecedor = fornecedor;
+		this.debito = 0.0;
 		this.compras = new ArrayList<Compra>();
 	}
 
 	public void adicionaCompra(Compra compra) {
 		this.compras.add(compra);
+		this.setDebito();
 	}
 
 	public String getCpf() {
@@ -34,13 +37,28 @@ public class Conta {
 		return compras;
 	}
 	
-	public double getDebito() {
-		double debito = 0.00;
-		for(Compra compra: this.compras) {
-			debito += compra.getProduto().getPreco();
+	private void setDebito() {
+		this.debito = 0.0;
+		if(!this.compras.isEmpty()) {
+			for(Compra compra: this.compras) {
+				this.debito += compra.getProduto().getPreco();
+			}
 		}
-		return debito;
 	}
 	
+	public double getDebito() {
+		return this.debito;
+	}
+
+	public void realizaPagamento() {
+		this.debito = 0.0;
+	}
+	
+	public boolean isQuitado() {
+		if(this.debito == 0.0) {
+			return true;
+		}
+		return false;
+	}
 	
 }

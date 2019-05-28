@@ -285,6 +285,10 @@ public class Facade {
 		return this.clientes.exibeContasAll(cpf);
 	}
 	
+	public void realizaPagamento(String cpf, String fornecedor) {
+		this.clientes.realizaPagamento(cpf, fornecedor, new FornecedorService(this.fornecedores));
+	}
+	
 	public static void main(String[] args) {
 		args = new String[] {"saga.facade.Facade",
 				"acceptance_tests/use_case_1.txt",
@@ -292,7 +296,9 @@ public class Facade {
 				"acceptance_tests/use_case_3.txt",
 				"acceptance_tests/use_case_4.txt",
 				"acceptance_tests/use_case_5.txt",
-				"acceptance_tests/use_case_6.txt"};
+				"acceptance_tests/use_case_6.txt",
+				"acceptance_tests/use_case_7.txt",
+				"acceptance_tests/use_case_8.txt"};
 		EasyAccept.main(args);
 	}
 }

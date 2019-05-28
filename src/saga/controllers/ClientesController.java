@@ -381,4 +381,29 @@ public class ClientesController {
 		
 		return this.contas.get(cpf).imprimeContasAll(this.clientes.get(cpf).getNome());
 	}
+	
+	public void realizaPagamento(String cpf, String fornecedor, FornecedorService fornecedorService) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro no pagamento de conta: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: cpf invalido.");
+		}
+		if(this.clientes.get(cpf) == null) {
+			throw new NullPointerException("Erro no pagamento de conta: cliente nao existe.");
+		}
+		if(fornecedor == null) {
+			throw new NullPointerException("Erro no pagamento de conta: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(fornecedor.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(!fornecedorService.existeFornecedor(fornecedor)) {
+			throw new NullPointerException("Erro no pagamento de conta: fornecedor nao existe.");
+		}
+		this.contas.get(cpf).realizaPagamento(fornecedor);
+	}
 }

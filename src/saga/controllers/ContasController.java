@@ -35,7 +35,18 @@ public class ContasController {
 		if(!this.contas.containsKey(fornecedor)) {
 			throw new NullPointerException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
 		}
+		if(this.contas.get(fornecedor).isQuitado()) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+		}
 		return this.contas.get(fornecedor).getDebito();
+	}
+	
+	public void realizaPagamento(String fornecedor) {
+		if(!this.existeContaFornecedor(fornecedor)) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: nao ha debito do cliente associado a este fornecedor.");
+		}
+		this.contas.get(fornecedor).realizaPagamento();
+		this.contas.remove(fornecedor);
 	}
 	
 	public boolean existeContas() {
